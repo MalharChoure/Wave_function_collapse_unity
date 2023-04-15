@@ -50,8 +50,8 @@ public class GridCreator : MonoBehaviour
     [SerializeField] GameObject Block5555;
 
 
-    int ROW = 20;
-    int COL = 20;
+    int ROW = 30;
+    int COL = 30;
 
     // this will contain all our tiles and their rules.
     List<Tile> tiles = new List<Tile>();
@@ -67,7 +67,7 @@ public class GridCreator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tiles.Add(new Tile(Block0, new List<int>() { 0, 0, 0, 0})); 
+        /*tiles.Add(new Tile(Block0, new List<int>() { 0, 0, 0, 0})); 
 
         tiles.Add(new Tile(Block1, new List<int>() { 1, 1, 0, 1})); 
         tiles.Add(new Tile(Block11, new List<int>() { 1, 1, 1, 0})); 
@@ -95,8 +95,34 @@ public class GridCreator : MonoBehaviour
         tiles.Add(new Tile(Block55, new List<int>() { 0, 0, 1, 1}));
         tiles.Add(new Tile(Block555, new List<int>() { 0, 0, 1, 1}));
         tiles.Add(new Tile(Block5555, new List<int>() { 0, 0, 1, 1}));
+        */
 
-        tilesGO = new List<GameObject>() { Block0, Block1, Block11, Block111, Block1111, Block2, Block22, Block222, Block2222, Block3, Block33, Block4, Block4, Block44, Block444, Block4444, Block5, Block55, Block555, Block5555 };
+        tiles.Add(new Tile(Block0, new List<string>() { "aaa", "aaa", "aaa", "aaa" }));
+
+        tiles.Add(new Tile(Block1, new List<string>() { "aaa", "aab", "ccc", "baa" }));
+        tiles.Add(new Tile(Block11, new List<string>() { "baa", "aaa", "aab", "ccc" }));
+        tiles.Add(new Tile(Block111, new List<string>() { "ccc", "baa", "aaa", "aab" }));
+        tiles.Add(new Tile(Block1111, new List<string>() { "aab", "ccc", "baa", "aaa" }));
+
+        tiles.Add(new Tile(Block2, new List<string>() { "ccc", "ccc", "bab", "ccc" }));
+        tiles.Add(new Tile(Block22, new List<string>() { "ccc", "ccc", "ccc", "bab" }));
+        tiles.Add(new Tile(Block222, new List<string>() { "bab", "ccc", "ccc", "ccc" }));
+        tiles.Add(new Tile(Block2222, new List<string>() { "ccc", "bab", "ccc", "ccc" }));
+
+        tiles.Add(new Tile(Block3, new List<string>() { "ccc", "bab", "ccc", "bab"}));
+        tiles.Add(new Tile(Block33, new List<string>() { "bab", "ccc", "bab", "ccc"}));
+
+        tiles.Add(new Tile(Block4, new List<string>() { "aab", "aaa", "baa", "aaa"}));
+        tiles.Add(new Tile(Block44, new List<string>() { "aaa", "aab", "aaa", "baa"}));
+        tiles.Add(new Tile(Block444, new List<string>() { "baa", "aaa", "aab", "aaa"}));
+        tiles.Add(new Tile(Block4444, new List<string>() { "aaa", "baa", "aaa", "aab"}));
+
+        tiles.Add(new Tile(Block5, new List<string>() { "ccc", "ccc", "baa", "aab"}));
+        tiles.Add(new Tile(Block55, new List<string>() { "aab", "ccc", "ccc", "baa"}));
+        tiles.Add(new Tile(Block555, new List<string>() { "baa", "aab", "ccc", "ccc"}));
+        tiles.Add(new Tile(Block5555, new List<string>() { "ccc", "baa", "aab", "ccc"}));
+
+        tilesGO = new List<GameObject>() { Block0, Block1, Block11, Block111, Block1111, Block2, Block22, Block222, Block2222, Block3, Block33, Block4, Block44, Block444, Block4444, Block5, Block55, Block555, Block5555 };
 
         // this will generate all the rules for the tiles.
         Tile.GenerateTileRules(tiles);
@@ -115,7 +141,7 @@ public class GridCreator : MonoBehaviour
         }
 
         // reduce a random cell and limit its options
-        grid[2][2].options = new List<int>() { 1 };
+        grid[10][10].options = new List<int>() { 1 };
     }
 
     // Update is called once per frame
@@ -172,6 +198,7 @@ public class GridCreator : MonoBehaviour
                 List<int> cellOptions = cellAbove.options;
                 List<int> constraintOptions = tiles[lowestEntropy.cell.options[0]].up;
                 cellAbove.options = Tile.ReturnValidOptions(cellOptions, constraintOptions);
+
             }
         }
 

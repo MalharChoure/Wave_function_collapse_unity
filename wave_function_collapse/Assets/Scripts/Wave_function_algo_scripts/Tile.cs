@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Tile
@@ -7,7 +9,7 @@ public class Tile
     public GameObject tile;
 
     // this stores the edges information of the current tile in the order UP, RIGHT, DOWN LEFT.
-    public List<int> edges;
+    public List<string> edges;
 
     // this stores all the tiles that can go to the respective sides of this tile
     public List<int> up = new List<int>();
@@ -15,10 +17,19 @@ public class Tile
     public List<int> down = new List<int>();
     public List<int> left = new List<int>();
 
-    public Tile(GameObject tile, List<int> edges)
+    public Tile(GameObject tile, List<string> edges)
     {
         this.tile = tile;
         this.edges = edges;
+    }
+
+    private static bool CompareString(string s1, string s2)
+    {
+        char[] s2Array = s2.ToCharArray();
+        Array.Reverse(s2Array);
+        string s2Reversed = new string(s2Array);
+
+        return s1 == s2Reversed;
     }
 
     // this method will automatically generate the rules for each side of the tile figuring out what tiles can go with which edge of it.
@@ -33,7 +44,7 @@ public class Tile
             {
                 Tile tile2 = allTiles[j];
 
-                if (tile1.edges[0] == tile2.edges[2])
+                /*if (tile1.edges[0] == tile2.edges[2])
                 {
                     tile1.up.Add(j);
                 }
@@ -49,6 +60,26 @@ public class Tile
                 }
 
                 if (tile1.edges[3] == tile2.edges[1])
+                {
+                    tile1.left.Add(j);
+                }*/
+
+                if (CompareString(tile1.edges[0], tile2.edges[2]))
+                {
+                    tile1.up.Add(j);
+                }
+
+                if (CompareString(tile1.edges[1], tile2.edges[3]))
+                {
+                    tile1.right.Add(j);
+                }
+
+                if (CompareString(tile1.edges[2], tile2.edges[0]))
+                {
+                    tile1.down.Add(j);
+                }
+
+                if (CompareString(tile1.edges[3], tile2.edges[1]))
                 {
                     tile1.left.Add(j);
                 }
