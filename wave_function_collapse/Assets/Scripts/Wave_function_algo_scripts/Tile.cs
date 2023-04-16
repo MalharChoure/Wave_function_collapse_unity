@@ -110,6 +110,8 @@ public class Tile
                 newValidOptions.Add(cellOptions[i]);
             }
         }
+
+        //Debug.Log(newValidOptions.Count == 0);
         return newValidOptions;
     }
 }

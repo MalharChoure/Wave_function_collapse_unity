@@ -141,7 +141,10 @@ public class GridCreator : MonoBehaviour
         }
 
         // reduce a random cell and limit its options
-        grid[10][10].options = new List<int>() { 1 };
+        grid[10][10].options = new List<int>() { 0 };
+        grid[3][3].options = new List<int>() { 0 };
+        grid[20][10].options = new List<int>() { 0 };
+        grid[15][5].options = new List<int>() { 0 };
     }
 
     // Update is called once per frame
@@ -199,6 +202,12 @@ public class GridCreator : MonoBehaviour
                 List<int> constraintOptions = tiles[lowestEntropy.cell.options[0]].up;
                 cellAbove.options = Tile.ReturnValidOptions(cellOptions, constraintOptions);
 
+                if (cellAbove.options.Count == 0)
+                {
+                    GameObject noOptionTile = Instantiate(tiles[0].tile, new Vector3(2 * randomCol, 0, -2 * (randomRow - 1)), Quaternion.identity);
+                    cellAbove.collapsed = true;
+                }
+
             }
         }
 
@@ -213,6 +222,12 @@ public class GridCreator : MonoBehaviour
                 List<int> constraintOptions = tiles[lowestEntropy.cell.options[0]].down;
 
                 cellDown.options = Tile.ReturnValidOptions(cellOptions, constraintOptions);
+
+                if (cellDown.options.Count == 0)
+                {
+                    GameObject noOptionTile = Instantiate(tiles[0].tile, new Vector3(2 * randomCol, 0, -2 * (randomRow + 1)), Quaternion.identity);
+                    cellDown.collapsed = true;
+                }
             }
         }
         if (randomCol > 0)
@@ -225,6 +240,12 @@ public class GridCreator : MonoBehaviour
                 List<int> constraintOptions = tiles[lowestEntropy.cell.options[0]].left;
 
                 cellLeft.options = Tile.ReturnValidOptions(cellOptions, constraintOptions);
+
+                if (cellLeft.options.Count == 0)
+                {
+                    GameObject noOptionTile = Instantiate(tiles[0].tile, new Vector3(2 * (randomCol - 1), 0, -2 * (randomRow)), Quaternion.identity);
+                    cellLeft.collapsed = true;
+                }
             }
         }
         if (randomCol < COL - 1)
@@ -237,6 +258,12 @@ public class GridCreator : MonoBehaviour
                 List<int> constraintOptions = tiles[lowestEntropy.cell.options[0]].right;
 
                 cellRight.options = Tile.ReturnValidOptions(cellOptions, constraintOptions);
+
+                if (cellRight.options.Count == 0)
+                {
+                    GameObject noOptionTile = Instantiate(tiles[0].tile, new Vector3(2 * (randomCol + 1), 0, -2 * (randomRow)), Quaternion.identity);
+                    cellRight.collapsed = true;
+                }
             }
         }
     }
