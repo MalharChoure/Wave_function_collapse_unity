@@ -65,7 +65,7 @@ public class Wave_algo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (queue.Any())
+        if (queue.Any() )//&& Input.GetKeyDown("w"))
         {   
         execute_queue();
         }
@@ -97,7 +97,15 @@ public class Wave_algo : MonoBehaviour
     {
         if (x < grid_size && x >= 0 && z < grid_size && z >= 0)
         {
-            if (grid[x, z] == null)
+            bool leave = true;
+            foreach(var ele in queue)
+            {
+                if (ele[0]==x && ele[1]==z)
+                {
+                    leave = false; break;
+                }
+            }
+            if (grid[x, z] == null && leave)
             { 
                 int[] arr = new int[3];
                 arr[0] = x;
@@ -112,6 +120,7 @@ public class Wave_algo : MonoBehaviour
         int[] co_ordinates=queue.Peek();
         List<int> possibilities = check_and_return_identiy(co_ordinates[0], co_ordinates[1]);
         int block_no=rnd.Next(0, possibilities.Count);
+        Debug.Log(possibilities.Count);
         grid[co_ordinates[0],co_ordinates[1]]= new block(co_ordinates[0], co_ordinates[1], blocks[block_no], return_dimension(set_rules, block_no), block_no);
         grid[co_ordinates[0], co_ordinates[1]].set_collapsed();
         addQueue(co_ordinates[0]+1, co_ordinates[1]);
@@ -132,7 +141,7 @@ public class Wave_algo : MonoBehaviour
             }
             else
             {
-                check_side[0] = 1;
+                check_side[0] = 0;
             }
         }
         else
@@ -148,7 +157,7 @@ public class Wave_algo : MonoBehaviour
             }
             else
             {
-                check_side[1] = 1;
+                check_side[1] = 0;
             }
         }
         else
@@ -164,7 +173,7 @@ public class Wave_algo : MonoBehaviour
             }
             else
             {
-                check_side[2] = 1;
+                check_side[2] = 0;
             }
         }
         else
@@ -195,8 +204,11 @@ public class Wave_algo : MonoBehaviour
         }
 
         List<int> valid_blocks = new List<int>();
-
-        for(int i=0;i<16;i++)
+        Debug.Log(check_side[0]);
+        Debug.Log(check_side[1]);
+        Debug.Log(check_side[2]);
+        Debug.Log(check_side[3]);
+        for (int i=0;i<16;i++)
         {
             int temp_counter = 0;
             for (int j=0;j<4;j++)
@@ -206,12 +218,12 @@ public class Wave_algo : MonoBehaviour
                     break;
                 }*/
                 
-                if(check_side[j]==0 && set_rules[i,j]==0)
+                if(check_side[j]==1 && set_rules[i, j] == 1 )
                 {
                     temp_counter ++;
                 }
             }
-            if(temp_counter==counter)
+            if(temp_counter==(4-counter))
             {
                 valid_blocks.Add(i);
             }
