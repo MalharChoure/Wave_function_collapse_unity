@@ -250,7 +250,7 @@ MonoBehaviour:
   blocks:
   - {fileID: 7205580740322467417, guid: 6313b7309edf10342800f6bb47fcb525, type: 3}
   - {fileID: 1106192430817739117, guid: 545c35845044f5841ac3e31174dd1ac3, type: 3}
-  padding: 4
+  padding: 8
 --- !u!4 &1449490974
 Transform:
   m_ObjectHideFlags: 0

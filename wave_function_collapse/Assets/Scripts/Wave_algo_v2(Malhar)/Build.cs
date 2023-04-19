@@ -58,7 +58,7 @@ public class Build : MonoBehaviour
         int[] coordinates = { x, z };
         for (int i=width_start;i<width-1; i++)
         {
-            grid[i, z] = new tile(tiles[4],  );
+            //grid[i, z] = new tile(tiles[4],  );
         }
         for (int i = width_start; i >=0; i--)
         {
