@@ -52,10 +52,18 @@ public class Build : MonoBehaviour
 
     public void create_room(int x,int z)
     {
-        int height=rnd.Next(0,4);
-        int width = rnd.Next(0,3);
-
+        int height = rnd.Next(1,6);
+        int width = rnd.Next(1,8);
+        int width_start = rnd.Next(0,width);
         int[] coordinates = { x, z };
+        for (int i=width_start;i<width-1; i++)
+        {
+            grid[i, z] = new tile(tiles[4],  );
+        }
+        for (int i = width_start; i >=0; i--)
+        {
+
+        }
     }
 
     // Start is called before the first frame update

@@ -19,6 +19,7 @@ public class Wave_algo : MonoBehaviour
     //private int[,] queue;
     Queue<int[]> queue = new Queue<int[]>();
     private System.Random rnd = new System.Random();
+
     class block
     {
         private enum state {collapsed,uncollapsed};
