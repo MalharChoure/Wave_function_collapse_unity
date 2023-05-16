@@ -352,6 +352,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Block6
+      value: 
+      objectReference: {fileID: 4231208502398964438, guid: 214eec0afe4ecf44b8eecdb517ffe959, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Stair1
+      value: 
+      objectReference: {fileID: 3647650443278518523, guid: a8f517e6602e22a4989680048daef34a, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Block66
+      value: 
+      objectReference: {fileID: 5148334363915332502, guid: 98e115adbffee9440a8de755ba8ee4c2, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Stair11
+      value: 
+      objectReference: {fileID: 5849803681042236978, guid: 718977b3aefd2304bb2f630718fa7cfa, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Block666
+      value: 
+      objectReference: {fileID: 8369284482366071926, guid: e6f118f23c090fb43bbc982d674a503b, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Stair111
+      value: 
+      objectReference: {fileID: 5438894321665094665, guid: 78500e217b9a90e438e5f5ad93c94587, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Block6666
+      value: 
+      objectReference: {fileID: 451873909713212129, guid: cbdd3a67529b3f742b6309bae899af46, type: 3}
+    - target: {fileID: 7334955829948964485, guid: ae5a19d196510e54f874831d2655f453, type: 3}
+      propertyPath: Stair1111
+      value: 
+      objectReference: {fileID: 922013800702707381, guid: 1f9acdeb546c8c041b81e34c7c9bc195, type: 3}
     - target: {fileID: 7334955829948964487, guid: ae5a19d196510e54f874831d2655f453, type: 3}
       propertyPath: m_Name
       value: GridCreator

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 struct LowestEntropyInfo
@@ -49,6 +50,15 @@ public class GridCreator : MonoBehaviour
     [SerializeField] GameObject Block555;
     [SerializeField] GameObject Block5555;
 
+    [SerializeField] GameObject Block6;
+    [SerializeField] GameObject Block66;
+    [SerializeField] GameObject Block666;
+    [SerializeField] GameObject Block6666;
+
+    [SerializeField] GameObject Stair1;
+    [SerializeField] GameObject Stair11;
+    [SerializeField] GameObject Stair111;
+    [SerializeField] GameObject Stair1111;
 
     int ROW = 30;
     int COL = 30;
@@ -112,15 +122,22 @@ public class GridCreator : MonoBehaviour
         tiles.Add(new Tile(Block3, new List<string>() { "ccc", "bab", "ccc", "bab"}));
         tiles.Add(new Tile(Block33, new List<string>() { "bab", "ccc", "bab", "ccc"}));
 
-        tiles.Add(new Tile(Block4, new List<string>() { "aab", "aaa", "baa", "aaa"}));
-        tiles.Add(new Tile(Block44, new List<string>() { "aaa", "aab", "aaa", "baa"}));
-        tiles.Add(new Tile(Block444, new List<string>() { "baa", "aaa", "aab", "aaa"}));
-        tiles.Add(new Tile(Block4444, new List<string>() { "aaa", "baa", "aaa", "aab"}));
+        tiles.Add(new Tile(Block4, new List<string>() { "aab", "bab", "baa", "aaa"}));
+        tiles.Add(new Tile(Block44, new List<string>() { "aaa", "aab", "bab", "baa"}));
+        tiles.Add(new Tile(Block444, new List<string>() { "baa", "aaa", "aab", "bab"}));
+        tiles.Add(new Tile(Block4444, new List<string>() { "bab", "baa", "aaa", "aab"}));
 
         tiles.Add(new Tile(Block5, new List<string>() { "ccc", "ccc", "baa", "aab"}));
         tiles.Add(new Tile(Block55, new List<string>() { "aab", "ccc", "ccc", "baa"}));
         tiles.Add(new Tile(Block555, new List<string>() { "baa", "aab", "ccc", "ccc"}));
         tiles.Add(new Tile(Block5555, new List<string>() { "ccc", "baa", "aab", "ccc"}));
+        
+        /*
+        tiles.Add(new Tile(Block6, new List<string>() { "ccc", "aaa", "ccc", "bab"}));
+        tiles.Add(new Tile(Block66, new List<string>() { "bab", "ccc", "aaa", "ccc"}));
+        tiles.Add(new Tile(Block666, new List<string>() { "ccc", "bab", "ccc", "aaa"}));
+        tiles.Add(new Tile(Block6666, new List<string>() { "aaa", "ccc", "bab", "ccc"}));
+        */
 
         tilesGO = new List<GameObject>() { Block0, Block1, Block11, Block111, Block1111, Block2, Block22, Block222, Block2222, Block3, Block33, Block4, Block44, Block444, Block4444, Block5, Block55, Block555, Block5555 };
 
@@ -141,10 +158,10 @@ public class GridCreator : MonoBehaviour
         }
 
         // reduce a random cell and limit its options
-        grid[10][10].options = new List<int>() { 0 };
-        grid[3][3].options = new List<int>() { 0 };
+        grid[10][10].options = new List<int>() { 0};
+        /*grid[3][3].options = new List<int>() { 0 };
         grid[20][10].options = new List<int>() { 0 };
-        grid[15][5].options = new List<int>() { 0 };
+        grid[15][5].options = new List<int>() { 0 };*/
     }
 
     // Update is called once per frame
