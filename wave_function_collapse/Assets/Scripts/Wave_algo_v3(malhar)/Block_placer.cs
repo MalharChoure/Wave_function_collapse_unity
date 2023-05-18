@@ -15,6 +15,8 @@ public class Block_placer : MonoBehaviour
     private System.Random rnd = new System.Random();
     public int padding=10;
     Queue<int[]> queue = new Queue<int[]>();
+    public int min_tiles=10;
+    public int max_tiles=20;
 
     class tile
     {
@@ -106,7 +108,7 @@ public class Block_placer : MonoBehaviour
 
     public void decide_max_covered_tile()
     {
-        int max = rnd.Next(20, 30);
+        int max = rnd.Next(min_tiles,max_tiles);
         for (int i=0;i<max;i++)
         {
             main_room_collapse();
