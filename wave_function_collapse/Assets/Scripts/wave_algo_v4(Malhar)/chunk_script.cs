@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class chunk_script : MonoBehaviour
@@ -16,6 +17,8 @@ public class chunk_script : MonoBehaviour
     public int room_x_scale = 1;
     public int room_y_scale = 1;
     public int room_z_scale = 1;
+
+    //block_offset
 
 
     // randomiser added under the name rnd and a random seed is invoked every time.
@@ -34,6 +37,7 @@ public class chunk_script : MonoBehaviour
     //This is to create a queue for the doors spawner
     Queue<int[]> queue = new Queue<int[]>();
 
+    public bool run = true;
 
 
     class block
@@ -46,6 +50,13 @@ public class chunk_script : MonoBehaviour
         int room_x;
         int room_y;
         int room_z;
+        public GameObject created;
+
+        public float block_offset_x = 0f;
+        public float block_offset_y = 0f;
+        public float block_offset_z = 0f;
+
+ 
 
         public block(int x,int y, int z, GameObject obj, int room_x, int room_y, int room_z)
         {
@@ -67,6 +78,8 @@ public class chunk_script : MonoBehaviour
         public void un_collapse()
         {
             collapsed= false;
+            if(created!=null)
+            Destroy(created);
         }
 
         private bool is_collapsed()
@@ -76,8 +89,8 @@ public class chunk_script : MonoBehaviour
 
         private void instantiate_prefab()
         {
-            Vector3 a = new Vector3(x*room_x, z*room_y, y*room_z); //cause unity has 
-            Instantiate(current,a,Quaternion.identity);
+            Vector3 a = new Vector3((x+block_offset_x)*room_x, (z+block_offset_z)*room_y, (y+block_offset_y)*room_z); //cause unity has 
+            created=Instantiate(current,a,Quaternion.identity);
         }
     }
 
@@ -86,8 +99,10 @@ public class chunk_script : MonoBehaviour
         chunks = new block[grid_size, grid_size, no_of_floors];
         central_room_coordinate_x = Mathf.Abs(grid_size / 2);
         central_room_size = central_room_size > grid_size ?(grid_size/2)-padding:central_room_size;
-        central_room_creator();
+        
         floors_creator();
+        cover_rest();
+        central_room_creator();
     }
 
     private void addqueue(int x,int y, int z)
@@ -101,20 +116,23 @@ public class chunk_script : MonoBehaviour
 
     private void central_room_creator()
     {
+        int step = 1;
         Debug.Log(central_room_coordinate_x);
         for (int k = 0; k < no_of_floors; k++)
         {
             Debug.Log("here 1");
-            for (int i = central_room_coordinate_x - central_room_size ; i < central_room_coordinate_x + central_room_size ; i++)
+            for (int i = central_room_coordinate_x - central_room_size - step ; i < central_room_coordinate_x + central_room_size +step; i++)
             {
                 Debug.Log(i);
-                for (int j = central_room_coordinate_x - central_room_size ; j < central_room_coordinate_x + central_room_size; j++)
+                for (int j = central_room_coordinate_x - central_room_size - step ; j < central_room_coordinate_x + central_room_size +step; j++)
                 {
                     Debug.Log(j);
+                    chunks[i, j, k].un_collapse();
                     chunks[i, j, k] = new block(i, j, k, tiles[k==0?1:2],room_x_scale,room_y_scale,room_z_scale);
                     chunks[i, j, k].set_collapsed();
                 }
             }
+            step = step + 1;
         }
     }
 
@@ -130,7 +148,7 @@ public class chunk_script : MonoBehaviour
         }
     }
 
-    private void room_collapse(int floor)
+    private void room_collapse(int floor) // I am not at liberty to talk about this
     {
         int grid_rnd_start_x = rnd.Next(padding, grid_size - padding);
         int grid_rnd_start_y = rnd.Next(padding, grid_size - padding);
@@ -148,6 +166,84 @@ public class chunk_script : MonoBehaviour
                 {
                     chunks[i, j, floor] = new block(i, j, floor, tiles[1], room_x_scale, room_y_scale, room_z_scale);
                     chunks[i, j, floor].set_collapsed();
+                }
+            }
+        }
+    }
+
+    public void execute_queue()
+    {
+        int[] coordinate = queue.Peek();
+        float xdirection = ((grid_size / 2) - coordinate[0]) / (grid_size / 2);
+        float ydirection = ((grid_size / 2) - coordinate[1]) / (grid_size / 2);
+        int z_path = coordinate[2];
+        int x_create_direction = xdirection >= 0 ? 1 : -1;
+        int y_create_direction = ydirection >= 0 ? 1 : -1;
+        int x_path = coordinate[0];
+        int y_path = coordinate[1];
+
+        bool flip = false;
+        while (x_path < grid_size - padding && x_path > padding)
+        {
+            if (chunks[x_path, coordinate[1],z_path].current == tiles[1] && flip)
+            {
+                break;
+            }
+            if (chunks[x_path, coordinate[1], z_path].current == tiles[1])
+            {
+                flip = true;
+            }
+            chunks[x_path, coordinate[1],z_path].un_collapse();
+            chunks[x_path, coordinate[1],z_path] = new block(x_path, coordinate[1], z_path, tiles[1],room_x_scale,room_y_scale,room_z_scale);
+            chunks[x_path, coordinate[1],z_path].set_collapsed();
+            x_path = x_path + x_create_direction;
+        }
+        flip = false;
+        while (y_path < grid_size - padding && y_path > padding)
+        {
+            if (chunks[coordinate[0], y_path,z_path].current == tiles[1] && flip)
+            {
+                break;
+            }
+            if (chunks[coordinate[0], y_path,z_path].current == tiles[1])
+            {
+                flip = true;
+            }
+            chunks[coordinate[0], y_path,z_path].un_collapse();
+            chunks[coordinate[0], y_path,z_path] = new block( coordinate[0], y_path, z_path, tiles[1], room_x_scale, room_y_scale, room_z_scale);
+            chunks[coordinate[0], y_path,z_path].set_collapsed();
+            y_path = y_path + y_create_direction;
+        }
+        queue.Dequeue();
+    }
+
+    private void Update()
+    {
+        if (queue.Any())
+        {
+            execute_queue();
+        }
+        else if(run)
+        {
+            central_room_creator();
+            run=false; 
+        }
+
+    }
+
+    private void cover_rest()
+    {
+        for(int i=0;i<grid_size;i++)
+        {
+            for(int j=0;j<grid_size;j++)
+            {
+                for(int k=0;k<no_of_floors;k++)
+                {
+                    if (chunks[i, j,k] == null)
+                    {
+                        chunks[i, j, k] = new block(i, j, k, tiles[0], room_x_scale, room_y_scale, room_z_scale);
+                        chunks[i, j, k].set_collapsed();
+                    }
                 }
             }
         }

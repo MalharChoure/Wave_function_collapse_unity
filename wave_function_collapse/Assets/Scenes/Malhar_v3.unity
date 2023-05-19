@@ -155,19 +155,20 @@ MonoBehaviour:
   grid_size: 50
   padding: 6
   max_room_size: 7
-  no_of_floors: 4
-  max_no_of_rooms: 30
-  min_no_of_rooms: 20
+  no_of_floors: 8
+  max_no_of_rooms: 40
+  min_no_of_rooms: 25
   room_x_scale: 1
   room_y_scale: 1
   room_z_scale: 1
   central_room_size: 5
   central_room_coordinate_x: 0
   tiles:
-  - {fileID: 7205580740322467417, guid: 6313b7309edf10342800f6bb47fcb525, type: 3}
+  - {fileID: 85643582731852198, guid: da8b0dba7c3c9304f96f5c348c54984f, type: 3}
   - {fileID: 1106192430817739117, guid: 545c35845044f5841ac3e31174dd1ac3, type: 3}
   - {fileID: 2685943485614004309, guid: c102c76767e420f4c8561ed153b8041d, type: 3}
   - {fileID: 2685943485614004309, guid: c102c76767e420f4c8561ed153b8041d, type: 3}
+  run: 1
 --- !u!4 &1026187800
 Transform:
   m_ObjectHideFlags: 0
