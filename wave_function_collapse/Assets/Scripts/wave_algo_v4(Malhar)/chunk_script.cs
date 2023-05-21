@@ -39,6 +39,7 @@ public class chunk_script : MonoBehaviour
     Queue<int[]> queue = new Queue<int[]>();
 
     public bool run = true;
+    public bool run2 = true;
 
 
     class block
@@ -95,10 +96,16 @@ public class chunk_script : MonoBehaviour
         private void instantiate_prefab()
         {
             Vector3 a = new Vector3((x+block_offset_x)*room_x, (z+block_offset_z)*room_y, (y+block_offset_y)*room_z); //cause unity has 
-            if(id==1)
-            created=Instantiate(current,a,Quaternion.identity,block.ground_parent.transform);
-            if(id==0)
-            created=Instantiate(current,a,Quaternion.identity,block.block_parent.transform);
+            if (id == 1)
+            {
+                created = Instantiate(current, a, Quaternion.identity, block.ground_parent.transform);
+                created.transform.localScale = new Vector3(room_x, room_z, room_y);
+            }
+            if (id == 0)
+            {
+                created = Instantiate(current, a, Quaternion.identity, block.block_parent.transform);
+                created.transform.localScale = new Vector3(room_x, room_z, room_y);
+            }
             else
             {
 
@@ -114,6 +121,11 @@ public class chunk_script : MonoBehaviour
         
         floors_creator();
         cover_rest();
+        //central_room_creator();
+        while (queue.Any())
+        {
+            execute_queue();
+        }
         central_room_creator();
     }
 
@@ -193,6 +205,9 @@ public class chunk_script : MonoBehaviour
         int y_create_direction = ydirection >= 0 ? 1 : -1;
         int x_path = coordinate[0];
         int y_path = coordinate[1];
+        int x_origin = coordinate[0];
+        int y_origin = coordinate[1];
+        int z_origin = coordinate[2];
 
         bool flip = false;
         while (x_path < grid_size - padding && x_path > padding)
@@ -227,19 +242,32 @@ public class chunk_script : MonoBehaviour
             y_path = y_path + y_create_direction;
         }
         queue.Dequeue();
+
+        if (z_origin != no_of_floors - 1)
+        {
+            if (chunks[x_origin, y_origin, z_origin + 1].id == 1)
+            {
+                Debug.Log("This is executed");
+                chunks[coordinate[0], y_path, z_path].un_collapse();
+                chunks[coordinate[0], y_path, z_path] = new block(x_origin, y_origin, z_origin, tiles[3], room_x_scale, room_y_scale, room_z_scale, 3);
+                chunks[coordinate[0], y_path, z_path].set_collapsed();
+                chunks[coordinate[0], y_path, z_path].un_collapse();
+                chunks[coordinate[0], y_path, z_path] = new block(x_origin, y_origin, z_origin+1, tiles[2], room_x_scale, room_y_scale, room_z_scale, 2);
+                chunks[coordinate[0], y_path, z_path].set_collapsed();
+            }
+        }
     }
 
     private void Update()
     {
-        if (queue.Any())
+
+        if(run)
         {
-            execute_queue();
+            run = false;
+ 
+            call_mesh_combiner();
         }
-        else if(run)
-        {
-            central_room_creator();
-            run=false; 
-        }
+
 
     }
 
@@ -259,8 +287,20 @@ public class chunk_script : MonoBehaviour
                 }
                 
             }
-        }
-        //GameObject.Find("Blocks").GetComponent<Mesh_combiner>().combine();
-       // GameObject.Find("Tiles").GetComponent<Mesh_combiner>().combine();
+        }      
+    }
+    
+    private void call_mesh_combiner()
+    {
+        GameObject.Find("Blocks").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        //GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+    }
+
+    IEnumerator call_plane_mesh_combiner()
+    {
+        new WaitForSeconds(1f);
+        
+        yield return null; 
     }
 }

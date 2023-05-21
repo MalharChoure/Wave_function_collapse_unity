@@ -231,17 +231,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 903607765}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24fb3eb29eeebd04d87475bbfb984a31, type: 3}
+  m_Script: {fileID: 11500000, guid: 70cdba7544ea51449aff72984391aa2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createMultiMaterialMesh: 0
-  combineInactiveChildren: 0
-  deactivateCombinedChildren: 1
-  deactivateCombinedChildrenMeshRenderers: 0
-  generateUVMap: 0
-  destroyCombinedChildren: 0
-  folderPath: Prefabs/CombinedMeshes
-  meshFiltersToSkip: []
 --- !u!1 &1026187798
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,12 +263,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ff595f89a26b0428f3657fadc73f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid_size: 50
-  padding: 6
-  max_room_size: 7
-  no_of_floors: 10
-  max_no_of_rooms: 30
-  min_no_of_rooms: 10
+  grid_size: 100
+  padding: 10
+  max_room_size: 10
+  no_of_floors: 4
+  max_no_of_rooms: 60
+  min_no_of_rooms: 50
   room_x_scale: 1
   room_y_scale: 1
   room_z_scale: 1
@@ -284,10 +276,11 @@ MonoBehaviour:
   central_room_coordinate_x: 0
   tiles:
   - {fileID: 85643582731852198, guid: da8b0dba7c3c9304f96f5c348c54984f, type: 3}
+  - {fileID: 8258952301175941460, guid: 386f8a56d2aac624a9a318163079f565, type: 3}
   - {fileID: 1106192430817739117, guid: 545c35845044f5841ac3e31174dd1ac3, type: 3}
-  - {fileID: 2685943485614004309, guid: c102c76767e420f4c8561ed153b8041d, type: 3}
-  - {fileID: 2685943485614004309, guid: c102c76767e420f4c8561ed153b8041d, type: 3}
+  - {fileID: 1106192430817739117, guid: 545c35845044f5841ac3e31174dd1ac3, type: 3}
   run: 1
+  run2: 1
 --- !u!4 &1026187800
 Transform:
   m_ObjectHideFlags: 0
@@ -314,7 +307,7 @@ GameObject:
   - component: {fileID: 1142627367}
   - component: {fileID: 1142627369}
   - component: {fileID: 1142627368}
-  - component: {fileID: 1142627371}
+  - component: {fileID: 1142627370}
   m_Layer: 0
   m_Name: Blocks
   m_TagString: Untagged
@@ -387,7 +380,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142627366}
   m_Mesh: {fileID: 0}
---- !u!114 &1142627371
+--- !u!114 &1142627370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -396,17 +389,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1142627366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24fb3eb29eeebd04d87475bbfb984a31, type: 3}
+  m_Script: {fileID: 11500000, guid: 70cdba7544ea51449aff72984391aa2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createMultiMaterialMesh: 0
-  combineInactiveChildren: 0
-  deactivateCombinedChildren: 1
-  deactivateCombinedChildrenMeshRenderers: 0
-  generateUVMap: 0
-  destroyCombinedChildren: 0
-  folderPath: Prefabs/CombinedMeshes
-  meshFiltersToSkip: []
 --- !u!1 &1281013236
 GameObject:
   m_ObjectHideFlags: 0
