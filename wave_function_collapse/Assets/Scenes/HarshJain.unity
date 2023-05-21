@@ -206,6 +206,18 @@ PrefabInstance:
       propertyPath: takesFallDamage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4612824603642630899, guid: fa4cc848e07107e459dce4ea99d04302, type: 3}
+      propertyPath: weapons.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612824603642630899, guid: fa4cc848e07107e459dce4ea99d04302, type: 3}
+      propertyPath: weapons.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4612824603642630899, guid: fa4cc848e07107e459dce4ea99d04302, type: 3}
+      propertyPath: weapons.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: da549e37fc4866b45a9de4aa56e3f60c, type: 2}
     - target: {fileID: 4612824603894472910, guid: fa4cc848e07107e459dce4ea99d04302, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -977,7 +989,7 @@ MonoBehaviour:
   image: {fileID: 8800526038346724123}
   graphics: {fileID: 785535776172266431}
   dropped: 0
-  weapon: {fileID: 11400000, guid: 298f327e66c254e4e857d0fd8d9aeff0, type: 2}
+  weapon: {fileID: 11400000, guid: da549e37fc4866b45a9de4aa56e3f60c, type: 2}
   currentBullets: 0
   totalBullets: 0
 --- !u!114 &58570701115566253
