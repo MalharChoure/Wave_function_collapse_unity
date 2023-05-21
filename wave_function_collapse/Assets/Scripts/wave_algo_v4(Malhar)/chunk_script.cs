@@ -63,7 +63,7 @@ public class chunk_script : MonoBehaviour
         public int id;
         public static GameObject block_parent= GameObject.Find("Blocks");
         public static GameObject ground_parent=GameObject.Find("Tiles");
-        public static GameObject stairs_parent = GameObject.Find("Stairs");
+        public static GameObject stairs_parent = GameObject.Find("Stairsv2");
         public static GameObject doors_parent = GameObject.Find("Doors");
 
 
@@ -320,8 +320,13 @@ public class chunk_script : MonoBehaviour
     {
         GameObject.Find("Blocks").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+<<<<<<< Updated upstream
         GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         //GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+=======
+        //GameObject.Find("Stairsv2").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+>>>>>>> Stashed changes
         //GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
     }
 
