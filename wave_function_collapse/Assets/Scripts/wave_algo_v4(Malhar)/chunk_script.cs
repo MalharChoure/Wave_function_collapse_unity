@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -61,6 +63,8 @@ public class chunk_script : MonoBehaviour
         public int id;
         public static GameObject block_parent= GameObject.Find("Blocks");
         public static GameObject ground_parent=GameObject.Find("Tiles");
+        public static GameObject stairs_parent = GameObject.Find("Stairs");
+        public static GameObject doors_parent = GameObject.Find("Doors");
 
 
         public block(int x,int y, int z, GameObject obj, int room_x, int room_y, int room_z, int identity)
@@ -99,17 +103,37 @@ public class chunk_script : MonoBehaviour
             if (id == 1)
             {
                 created = Instantiate(current, a, Quaternion.identity, block.ground_parent.transform);
-                created.transform.localScale = new Vector3(room_x, room_z, room_y);
+                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
             }
-            if (id == 0)
+            else if (id == 0)
             {
                 created = Instantiate(current, a, Quaternion.identity, block.block_parent.transform);
-                created.transform.localScale = new Vector3(room_x, room_z, room_y);
+                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
             }
+            else if(id==3)
+            {
+                Debug.Log("HEre");
+                created = Instantiate(current, a, Quaternion.Euler(new Vector3(-90,0,0)), block.stairs_parent.transform);
+                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
+            }
+            else if(id==4)
+            {
+                created = Instantiate(current, a, Quaternion.Euler(new Vector3(-90, 0, 0)),block.doors_parent.transform);
+            }
+            /*else if (id == 2)
+            {
+                Debug.Log("HEre");
+                created = Instantiate(current, a, Quaternion.identity);
+                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
+            }*/
             else
             {
-
             }
+        }
+
+        public void rotate(int rot_x,int rot_y,int rot_z)
+        {
+            created.transform.rotation = Quaternion.Euler(new Vector3(rot_x,rot_z,rot_y));
         }
     }
 
@@ -124,7 +148,8 @@ public class chunk_script : MonoBehaviour
         //central_room_creator();
         while (queue.Any())
         {
-            execute_queue();
+            //execute_queue();
+            queueexecute();
         }
         central_room_creator();
     }
@@ -141,16 +166,16 @@ public class chunk_script : MonoBehaviour
     private void central_room_creator()
     {
         int step = 1;
-        Debug.Log(central_room_coordinate_x);
+        //Debug.Log(central_room_coordinate_x);
         for (int k = 0; k < no_of_floors; k++)
         {
-            Debug.Log("here 1");
+            //Debug.Log("here 1");
             for (int i = central_room_coordinate_x - central_room_size - step ; i < central_room_coordinate_x + central_room_size +step; i++)
             {
-                Debug.Log(i);
+               // Debug.Log(i);
                 for (int j = central_room_coordinate_x - central_room_size - step ; j < central_room_coordinate_x + central_room_size +step; j++)
                 {
-                    Debug.Log(j);
+                    //Debug.Log(j);
                     chunks[i, j, k].un_collapse();
                     chunks[i, j, k] = new block(i, j, k, tiles[k==0?1:2],room_x_scale,room_y_scale,room_z_scale, k == 0 ? 1 : 2);
                     chunks[i, j, k].set_collapsed();
@@ -220,10 +245,11 @@ public class chunk_script : MonoBehaviour
             {
                 flip = true;
             }
-            chunks[x_path, coordinate[1],z_path].un_collapse();
-            chunks[x_path, coordinate[1],z_path] = new block(x_path, coordinate[1], z_path, tiles[1],room_x_scale,room_y_scale,room_z_scale,1);
-            chunks[x_path, coordinate[1],z_path].set_collapsed();
-            x_path = x_path + x_create_direction;
+               chunks[x_path, coordinate[1], z_path].un_collapse();
+               chunks[x_path, coordinate[1], z_path] = new block(x_path, coordinate[1], z_path, tiles[1], room_x_scale, room_y_scale, room_z_scale, 1);
+               chunks[x_path, coordinate[1], z_path].set_collapsed();
+               x_path = x_path + x_create_direction;
+            
         }
         flip = false;
         while (y_path < grid_size - padding && y_path > padding)
@@ -236,10 +262,10 @@ public class chunk_script : MonoBehaviour
             {
                 flip = true;
             }
-            chunks[coordinate[0], y_path,z_path].un_collapse();
-            chunks[coordinate[0], y_path,z_path] = new block( coordinate[0], y_path, z_path, tiles[1], room_x_scale, room_y_scale, room_z_scale,1);
-            chunks[coordinate[0], y_path,z_path].set_collapsed();
-            y_path = y_path + y_create_direction;
+                chunks[coordinate[0], y_path, z_path].un_collapse();
+                chunks[coordinate[0], y_path, z_path] = new block(coordinate[0], y_path, z_path, tiles[1], room_x_scale, room_y_scale, room_z_scale, 1);
+                chunks[coordinate[0], y_path, z_path].set_collapsed();
+                y_path = y_path + y_create_direction;
         }
         queue.Dequeue();
 
@@ -248,12 +274,12 @@ public class chunk_script : MonoBehaviour
             if (chunks[x_origin, y_origin, z_origin + 1].id == 1)
             {
                 Debug.Log("This is executed");
-                chunks[coordinate[0], y_path, z_path].un_collapse();
-                chunks[coordinate[0], y_path, z_path] = new block(x_origin, y_origin, z_origin, tiles[3], room_x_scale, room_y_scale, room_z_scale, 3);
-                chunks[coordinate[0], y_path, z_path].set_collapsed();
-                chunks[coordinate[0], y_path, z_path].un_collapse();
-                chunks[coordinate[0], y_path, z_path] = new block(x_origin, y_origin, z_origin+1, tiles[2], room_x_scale, room_y_scale, room_z_scale, 2);
-                chunks[coordinate[0], y_path, z_path].set_collapsed();
+                chunks[x_origin,y_origin, z_origin].un_collapse();
+                chunks[x_origin, y_origin, z_origin] = new block(x_origin, y_origin, z_origin, tiles[3], room_x_scale, room_y_scale, room_z_scale, 3);
+                chunks[x_origin, y_origin, z_origin].set_collapsed();
+                chunks[x_origin, y_origin, z_origin + 1].un_collapse();
+                chunks[x_origin, y_origin, z_origin + 1] = new block(x_origin, y_origin, z_origin+1, tiles[2], room_x_scale, room_y_scale, room_z_scale, 2);
+                chunks[x_origin,y_origin, z_origin+1].set_collapsed();
             }
         }
     }
@@ -294,6 +320,8 @@ public class chunk_script : MonoBehaviour
     {
         GameObject.Find("Blocks").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         //GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
     }
 
@@ -302,5 +330,82 @@ public class chunk_script : MonoBehaviour
         new WaitForSeconds(1f);
         
         yield return null; 
+    }
+
+    public void queueexecute()
+    {
+        int[] coordinate = queue.Peek();
+        float xdirection = ((grid_size / 2) - coordinate[0]) / (grid_size / 2);
+        float ydirection = ((grid_size / 2) - coordinate[1]) / (grid_size / 2);
+        int x_create_direction = xdirection >= 0 ? 1 : -1;
+        int y_create_direction = ydirection >= 0 ? 1 : -1;
+        int x_path = coordinate[0];
+        int y_path = coordinate[1];
+        bool flip = false;
+        while (x_path < grid_size - padding && x_path > padding)
+        {
+            if (chunks[x_path,coordinate[1],coordinate[2]].id!=1)
+            {
+                flip = true;
+            }
+            if(flip)
+            {
+                if(chunks[x_path, coordinate[1], coordinate[2]].id==1)
+                {
+                    chunks[x_path, coordinate[1], coordinate[2]].un_collapse();
+                    chunks[x_path, coordinate[1], coordinate[2]] = new block(x_path, coordinate[1], coordinate[2], tiles[4], room_x_scale, room_y_scale, room_z_scale, 4);
+                    chunks[x_path, coordinate[1], coordinate[2]].set_collapsed();
+                    chunks[coordinate[0], y_path, coordinate[2]].rotate(-90, 0, x_create_direction==-1?180:0);
+                    x_path = x_path + x_create_direction;
+                    break;
+                }
+            }
+            chunks[x_path, coordinate[1], coordinate[2]].un_collapse();
+            chunks[x_path, coordinate[1], coordinate[2]] = new block(x_path, coordinate[1], coordinate[2], tiles[1], room_x_scale, room_y_scale, room_z_scale, 1);
+            chunks[x_path, coordinate[1], coordinate[2]].set_collapsed();
+
+            x_path = x_path + x_create_direction;
+        }
+        flip = false;
+
+        while(y_path < grid_size - padding && y_path > padding)
+        {
+            if (chunks[coordinate[0], y_path, coordinate[2]].id != 1)
+            {
+                flip = true;
+            }
+            if (flip)
+            {
+                if (chunks[coordinate[0], y_path, coordinate[2]].id == 1)
+                {
+                    chunks[coordinate[0], y_path, coordinate[2]].un_collapse();
+                    chunks[coordinate[0], y_path, coordinate[2]] = new block(coordinate[0], y_path, coordinate[2], tiles[4], room_x_scale, room_y_scale, room_z_scale, 4);
+                    chunks[coordinate[0], y_path, coordinate[2]].set_collapsed();
+                    chunks[coordinate[0], y_path, coordinate[2]].rotate(-90,0,-y_create_direction*90);
+                    y_path = y_path + y_create_direction;
+                    break;
+                }
+            }
+            chunks[coordinate[0], y_path, coordinate[2]].un_collapse();
+            chunks[coordinate[0], y_path, coordinate[2]] = new block(coordinate[0], y_path, coordinate[2], tiles[1], room_x_scale, room_y_scale, room_z_scale, 1);
+            chunks[coordinate[0], y_path, coordinate[2]].set_collapsed();
+            y_path = y_path + y_create_direction;
+        }
+
+        queue.Dequeue();
+
+        if (coordinate[2] != no_of_floors - 1)
+        {
+            if (chunks[coordinate[0], coordinate[1], coordinate[2] + 1].id == 1)
+            {
+                Debug.Log("This is executed");
+                chunks[coordinate[0], coordinate[1], coordinate[2]].un_collapse();
+                chunks[coordinate[0], coordinate[1], coordinate[2]] = new block(coordinate[0], coordinate[1], coordinate[2], tiles[3], room_x_scale, room_y_scale, room_z_scale, 3);
+                chunks[coordinate[0], coordinate[1], coordinate[2]].set_collapsed();
+                chunks[coordinate[0], coordinate[1], coordinate[2] + 1].un_collapse();
+                chunks[coordinate[0], coordinate[1], coordinate[2] + 1] = new block(coordinate[0], coordinate[1], coordinate[2] + 1, tiles[2], room_x_scale, room_y_scale, room_z_scale, 2);
+                chunks[coordinate[0], coordinate[1], coordinate[2] + 1].set_collapsed();
+            }
+        }
     }
 }
