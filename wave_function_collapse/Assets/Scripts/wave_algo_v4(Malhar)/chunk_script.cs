@@ -320,13 +320,12 @@ public class chunk_script : MonoBehaviour
     {
         GameObject.Find("Blocks").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-<<<<<<< Updated upstream
-        GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+
+        //GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         //GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-=======
+
         //GameObject.Find("Stairsv2").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-        GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
->>>>>>> Stashed changes
+        //GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         //GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
     }
 
