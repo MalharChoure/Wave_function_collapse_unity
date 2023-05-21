@@ -321,7 +321,7 @@ public class chunk_script : MonoBehaviour
         GameObject.Find("Blocks").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-        GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        //GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         //GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
     }
 
@@ -352,11 +352,11 @@ public class chunk_script : MonoBehaviour
             {
                 if(chunks[x_path, coordinate[1], coordinate[2]].id==1)
                 {
-                    chunks[x_path, coordinate[1], coordinate[2]].un_collapse();
+                    /*chunks[x_path, coordinate[1], coordinate[2]].un_collapse();
                     chunks[x_path, coordinate[1], coordinate[2]] = new block(x_path, coordinate[1], coordinate[2], tiles[4], room_x_scale, room_y_scale, room_z_scale, 4);
                     chunks[x_path, coordinate[1], coordinate[2]].set_collapsed();
                     chunks[coordinate[0], y_path, coordinate[2]].rotate(-90, 0, x_create_direction==-1?180:0);
-                    x_path = x_path + x_create_direction;
+                    x_path = x_path + x_create_direction;*/
                     break;
                 }
             }
@@ -378,10 +378,10 @@ public class chunk_script : MonoBehaviour
             {
                 if (chunks[coordinate[0], y_path, coordinate[2]].id == 1)
                 {
-                    chunks[coordinate[0], y_path, coordinate[2]].un_collapse();
+                    /*chunks[coordinate[0], y_path, coordinate[2]].un_collapse();
                     chunks[coordinate[0], y_path, coordinate[2]] = new block(coordinate[0], y_path, coordinate[2], tiles[4], room_x_scale, room_y_scale, room_z_scale, 4);
                     chunks[coordinate[0], y_path, coordinate[2]].set_collapsed();
-                    chunks[coordinate[0], y_path, coordinate[2]].rotate(-90,0,-y_create_direction*90);
+                    chunks[coordinate[0], y_path, coordinate[2]].rotate(-90,0,-y_create_direction*90);*/
                     y_path = y_path + y_create_direction;
                     break;
                 }
