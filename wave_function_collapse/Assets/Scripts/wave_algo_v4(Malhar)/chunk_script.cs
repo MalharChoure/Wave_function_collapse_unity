@@ -20,6 +20,7 @@ public class chunk_script : MonoBehaviour
 
     //block_offset
 
+    //parent object to save batches.
 
     // randomiser added under the name rnd and a random seed is invoked every time.
     private System.Random rnd = new System.Random();
@@ -56,9 +57,12 @@ public class chunk_script : MonoBehaviour
         public float block_offset_y = 0f;
         public float block_offset_z = 0f;
 
- 
+        public int id;
+        public static GameObject block_parent= GameObject.Find("Blocks");
+        public static GameObject ground_parent=GameObject.Find("Tiles");
 
-        public block(int x,int y, int z, GameObject obj, int room_x, int room_y, int room_z)
+
+        public block(int x,int y, int z, GameObject obj, int room_x, int room_y, int room_z, int identity)
         {
             this.x = x;
             this.y = y;
@@ -67,6 +71,7 @@ public class chunk_script : MonoBehaviour
             this.room_x = room_x;
             this.room_y = room_y;
             this.room_z = room_z;
+            id = identity;
         }
 
         public void set_collapsed()
@@ -90,7 +95,14 @@ public class chunk_script : MonoBehaviour
         private void instantiate_prefab()
         {
             Vector3 a = new Vector3((x+block_offset_x)*room_x, (z+block_offset_z)*room_y, (y+block_offset_y)*room_z); //cause unity has 
-            created=Instantiate(current,a,Quaternion.identity);
+            if(id==1)
+            created=Instantiate(current,a,Quaternion.identity,block.ground_parent.transform);
+            if(id==0)
+            created=Instantiate(current,a,Quaternion.identity,block.block_parent.transform);
+            else
+            {
+
+            }
         }
     }
 
@@ -128,7 +140,7 @@ public class chunk_script : MonoBehaviour
                 {
                     Debug.Log(j);
                     chunks[i, j, k].un_collapse();
-                    chunks[i, j, k] = new block(i, j, k, tiles[k==0?1:2],room_x_scale,room_y_scale,room_z_scale);
+                    chunks[i, j, k] = new block(i, j, k, tiles[k==0?1:2],room_x_scale,room_y_scale,room_z_scale, k == 0 ? 1 : 2);
                     chunks[i, j, k].set_collapsed();
                 }
             }
@@ -164,7 +176,7 @@ public class chunk_script : MonoBehaviour
             {
                 if (chunks[i, j, floor] == null)
                 {
-                    chunks[i, j, floor] = new block(i, j, floor, tiles[1], room_x_scale, room_y_scale, room_z_scale);
+                    chunks[i, j, floor] = new block(i, j, floor, tiles[1], room_x_scale, room_y_scale, room_z_scale,1);
                     chunks[i, j, floor].set_collapsed();
                 }
             }
@@ -194,7 +206,7 @@ public class chunk_script : MonoBehaviour
                 flip = true;
             }
             chunks[x_path, coordinate[1],z_path].un_collapse();
-            chunks[x_path, coordinate[1],z_path] = new block(x_path, coordinate[1], z_path, tiles[1],room_x_scale,room_y_scale,room_z_scale);
+            chunks[x_path, coordinate[1],z_path] = new block(x_path, coordinate[1], z_path, tiles[1],room_x_scale,room_y_scale,room_z_scale,1);
             chunks[x_path, coordinate[1],z_path].set_collapsed();
             x_path = x_path + x_create_direction;
         }
@@ -210,7 +222,7 @@ public class chunk_script : MonoBehaviour
                 flip = true;
             }
             chunks[coordinate[0], y_path,z_path].un_collapse();
-            chunks[coordinate[0], y_path,z_path] = new block( coordinate[0], y_path, z_path, tiles[1], room_x_scale, room_y_scale, room_z_scale);
+            chunks[coordinate[0], y_path,z_path] = new block( coordinate[0], y_path, z_path, tiles[1], room_x_scale, room_y_scale, room_z_scale,1);
             chunks[coordinate[0], y_path,z_path].set_collapsed();
             y_path = y_path + y_create_direction;
         }
@@ -241,11 +253,14 @@ public class chunk_script : MonoBehaviour
                 {
                     if (chunks[i, j,k] == null)
                     {
-                        chunks[i, j, k] = new block(i, j, k, tiles[0], room_x_scale, room_y_scale, room_z_scale);
+                        chunks[i, j, k] = new block(i, j, k, tiles[0], room_x_scale, room_y_scale, room_z_scale,0);
                         chunks[i, j, k].set_collapsed();
                     }
                 }
+                
             }
         }
+        //GameObject.Find("Blocks").GetComponent<Mesh_combiner>().combine();
+       // GameObject.Find("Tiles").GetComponent<Mesh_combiner>().combine();
     }
 }
