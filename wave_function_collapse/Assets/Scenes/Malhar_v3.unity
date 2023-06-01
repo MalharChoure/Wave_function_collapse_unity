@@ -945,7 +945,14 @@ MonoBehaviour:
   no_of_floors: 10
   max_no_of_rooms: 60
   min_no_of_rooms: 50
-  room_x_scale: 1
+  blend_blocks:
+  - {fileID: 5644171402288989996, guid: 753da7262f5f18446aec914257969b9a, type: 3}
+  - {fileID: 1535036987672262173, guid: cc9331a397c711d4a9bba3cdeeeba392, type: 3}
+  - {fileID: 1153442409978928832, guid: 743d7fbfbfbd18d4a9fb8b95467ebc53, type: 3}
+  - {fileID: 6186335106373086751, guid: cfd47f9aceaf96643b66bc307a8abf34, type: 3}
+  - {fileID: 6045666912738936590, guid: e7ff499cfc1ae2d4c9c881790d22809b, type: 3}
+  - {fileID: 8935064717026488045, guid: 1208e8f885fe0664282cf905be148094, type: 3}
+  room_x_scale: 2
   room_y_scale: 1
   room_z_scale: 1
   central_room_size: 5
