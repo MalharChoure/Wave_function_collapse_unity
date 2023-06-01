@@ -15,6 +15,9 @@ public class chunk_script : MonoBehaviour
     public int max_no_of_rooms = 5;
     public int min_no_of_rooms = 3;
 
+    //the blender blocks are called here
+    public GameObject[] blend_blocks= new GameObject[6];
+
     //scale of the room
     public int room_x_scale = 1;
     public int room_y_scale = 1;
@@ -97,28 +100,39 @@ public class chunk_script : MonoBehaviour
             return collapsed;
         }
 
+        //0 is wall 
+        //1 is floor
+        //2 is empty
+        //3 is stairs 
+        //4 is doors
         private void instantiate_prefab()
         {
-            Vector3 a = new Vector3((x+block_offset_x)*room_x, (z+block_offset_z)*room_y, (y+block_offset_y)*room_z); //cause unity has 
+            Vector3 a = new Vector3((x+block_offset_x)*room_x, (z+block_offset_z)*room_z, (y+block_offset_y)*room_y); //cause unity has 
+            
             if (id == 1)
             {
                 created = Instantiate(current, a, Quaternion.identity, block.ground_parent.transform);
-                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
+                Vector3 scale_of_object = created.transform.localScale;
+                created.transform.localScale = new Vector3(room_x*scale_of_object.x, room_z*scale_of_object.z, room_y*scale_of_object.y);
             }
             else if (id == 0)
             {
                 created = Instantiate(current, a, Quaternion.identity, block.block_parent.transform);
-                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
+                Vector3 scale_of_object = created.transform.localScale;
+                created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_y * scale_of_object.y);
             }
             else if(id==3)
             {
                 Debug.Log("HEre");
                 created = Instantiate(current, a, Quaternion.Euler(new Vector3(-90,0,0)), block.stairs_parent.transform);
-                //created.transform.localScale = new Vector3(room_x, room_z, room_y);
+                Vector3 scale_of_object = created.transform.localScale;
+                created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_y * scale_of_object.y);
             }
             else if(id==4)
             {
                 created = Instantiate(current, a, Quaternion.Euler(new Vector3(-90, 0, 0)),block.doors_parent.transform);
+                Vector3 scale_of_object = created.transform.localScale;
+                created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_y * scale_of_object.y);
             }
             /*else if (id == 2)
             {
