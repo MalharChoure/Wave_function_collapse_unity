@@ -321,6 +321,25 @@ public class chunk_script : MonoBehaviour
                 {
                     if (chunks[i, j,k] == null)
                     {
+                        int[] orient = new int[4];
+                        if (chunks[i-1>0?i-1:i,j,k].id==1)
+                            orient[0] = 1;
+                        else
+                            orient[0] = 0;
+                        if(chunks[i,j - 1 > 0 ? j - 1 : j, k].id == 1)
+                            orient[0] = 1;
+                        else
+                            orient[0] = 0;
+                        if(chunks[i + 1 < grid_size ? i + 1 : i, j, k].id == 1)
+                            orient[0] = 1;
+                        else
+                            orient[0] = 0;
+                        if(chunks[i, j + 1 > 0 ? j + 1 : j, k].id == 1)
+                            orient[0] = 1;
+                        else
+                            orient[0] = 0; 
+
+                        
                         chunks[i, j, k] = new block(i, j, k, tiles[0], room_x_scale, room_y_scale, room_z_scale,0);
                         chunks[i, j, k].set_collapsed();
                     }
