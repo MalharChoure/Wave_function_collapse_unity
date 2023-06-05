@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5059650871830940695}
   - component: {fileID: 505060757370997877}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Parallel_side_block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593143688772235373}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b9f28789ebe00a04f8b1f82523cadcd3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -101,6 +101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Parallel
       objectReference: {fileID: 0}
+    - target: {fileID: 6045666912738936590, guid: e7ff499cfc1ae2d4c9c881790d22809b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7ff499cfc1ae2d4c9c881790d22809b, type: 3}
 --- !u!1 &2867128832948646690 stripped
@@ -115,7 +119,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2867128832948646690}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b9f28789ebe00a04f8b1f82523cadcd3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

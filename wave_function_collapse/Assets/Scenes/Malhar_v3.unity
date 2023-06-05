@@ -942,7 +942,7 @@ MonoBehaviour:
   grid_size: 100
   padding: 10
   max_room_size: 10
-  no_of_floors: 10
+  no_of_floors: 20
   max_no_of_rooms: 60
   min_no_of_rooms: 50
   blend_blocks:

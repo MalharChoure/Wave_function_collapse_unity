@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556214062821952158}
   - component: {fileID: 3168695432906889338}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Side_1_block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7288575743254786603}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b9f28789ebe00a04f8b1f82523cadcd3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -101,6 +101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 1_side block
       objectReference: {fileID: 0}
+    - target: {fileID: 5644171402288989996, guid: 753da7262f5f18446aec914257969b9a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 753da7262f5f18446aec914257969b9a, type: 3}
 --- !u!1 &260845822289876570 stripped
@@ -115,7 +119,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260845822289876570}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b9f28789ebe00a04f8b1f82523cadcd3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
