@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class chunk_script : MonoBehaviour
@@ -158,6 +159,7 @@ public class chunk_script : MonoBehaviour
         central_room_size = central_room_size > grid_size ?(grid_size/2)-padding:central_room_size;
         
         floors_creator();
+        
         cover_rest();
         //central_room_creator();
         while (queue.Any())
@@ -165,6 +167,7 @@ public class chunk_script : MonoBehaviour
             //execute_queue();
             queueexecute();
         }
+        //cover_rest();
         central_room_creator();
     }
 
@@ -319,29 +322,157 @@ public class chunk_script : MonoBehaviour
             {
                 for(int k=0;k<no_of_floors;k++)
                 {
-                    if (chunks[i, j,k] == null)
+                    if (chunks[i, j,k] == null || chunks[i,j,k].id==0)
                     {
                         int[] orient = new int[4];
-                        /*if (chunks[i-1>0?i-1:i,j,k].id==1)
+                        if(chunks[i - 1 > 0 ? i - 1 : i, j, k]==null)
+                            orient[0] = 0;
+                        else if (chunks[i-1>0?i-1:i,j,k].id==1)
                             orient[0] = 1;
                         else
                             orient[0] = 0;
-                        if(chunks[i,j - 1 > 0 ? j - 1 : j, k].id == 1)
-                            orient[0] = 1;
+                        if (chunks[i, j - 1 > 0 ? j - 1 : j, k] == null)
+                            orient[1] = 0;
+                        else if (chunks[i,j - 1 > 0 ? j - 1 : j, k].id == 1)
+                            orient[1] = 1;
                         else
-                            orient[0] = 0;
-                        if(chunks[i + 1 < grid_size ? i + 1 : i, j, k].id == 1)
-                            orient[0] = 1;
+                            orient[1] = 0;
+                        if (chunks[i + 1 < grid_size ? i + 1 : i, j, k] == null)
+                            orient[2] = 0;
+                        else if (chunks[i + 1 < grid_size ? i + 1 : i, j, k].id == 1)
+                            orient[2] = 1;
                         else
-                            orient[0] = 0;
-                        if(chunks[i, j + 1 > 0 ? j + 1 : j, k].id == 1)
-                            orient[0] = 1;
+                            orient[2] = 0;
+                        if (chunks[i, j + 1 > grid_size ? j + 1 : j, k] == null)
+                            orient[3] = 0;
+                        else if (chunks[i, j + 1 > 0 ? j + 1 : j, k].id == 1)
+                            orient[3] = 1;
                         else
-                            orient[0] = 0; */
+                            orient[3] = 0;
 
-                        
-                        chunks[i, j, k] = new block(i, j, k, tiles[0], room_x_scale, room_y_scale, room_z_scale,0);
+                        int sum = orient[0] * 1000 + orient[1] * 100 + orient[2] * 10 + orient[3] ;
+                        GameObject obj = blend_blocks[0];
+                        int[] rot = new int[3];
+                        switch(sum)
+                        {
+                            case 0000:
+                                obj = blend_blocks[5];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 1000:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0; 
+                                break;
+
+                            case 0100:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 0010:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = -90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0001:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = -180;
+                                rot[2] = 0;
+                                break;
+
+                            case 1100:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 0110:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = -90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0011:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = -180;
+                                rot[2] = 0;
+                                break;
+
+                            case 1001:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1010:
+                                obj = blend_blocks[4];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0101:
+                                obj = blend_blocks[4];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1110:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 0111:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = -90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1011:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = -180;
+                                rot[2] = 0;
+                                break;
+
+                            case 1101:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1111:
+                                obj = blend_blocks[3];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            default:
+                                break;
+                        }
+                        chunks[i, j, k] = new block(i, j, k, obj, room_x_scale, room_y_scale, room_z_scale,0);
                         chunks[i, j, k].set_collapsed();
+                        chunks[i, j, k].rotate(rot[0], rot[2], rot[1]);
                     }
                 }
                 

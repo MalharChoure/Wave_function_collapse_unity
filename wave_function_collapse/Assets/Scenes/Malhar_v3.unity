@@ -946,13 +946,13 @@ MonoBehaviour:
   max_no_of_rooms: 60
   min_no_of_rooms: 50
   blend_blocks:
-  - {fileID: 5644171402288989996, guid: 753da7262f5f18446aec914257969b9a, type: 3}
-  - {fileID: 1535036987672262173, guid: cc9331a397c711d4a9bba3cdeeeba392, type: 3}
-  - {fileID: 1153442409978928832, guid: 743d7fbfbfbd18d4a9fb8b95467ebc53, type: 3}
-  - {fileID: 6186335106373086751, guid: cfd47f9aceaf96643b66bc307a8abf34, type: 3}
-  - {fileID: 6045666912738936590, guid: e7ff499cfc1ae2d4c9c881790d22809b, type: 3}
-  - {fileID: 8935064717026488045, guid: 1208e8f885fe0664282cf905be148094, type: 3}
-  room_x_scale: 2
+  - {fileID: 7288575743254786603, guid: 5814b9b0b41c08e4d85a95b373931d56, type: 3}
+  - {fileID: 3093429254685768995, guid: 6f550bc752438e040b5a1a9f0ca20153, type: 3}
+  - {fileID: 274334916524571039, guid: 10e1bfbbe6fc2a344a51c0801ca56241, type: 3}
+  - {fileID: 3295045022784166248, guid: 2dcca3f67781c1d42a6afdc7909e53a9, type: 3}
+  - {fileID: 593143688772235373, guid: 1eafcb178ae43e2409149535f93b307b, type: 3}
+  - {fileID: 3342661842666284991, guid: 05236032d4f032a4090dde65a4a4aa3c, type: 3}
+  room_x_scale: 1
   room_y_scale: 1
   room_z_scale: 1
   central_room_size: 5
