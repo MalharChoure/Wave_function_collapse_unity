@@ -33,6 +33,8 @@ public class chunk_script : MonoBehaviour
 
     // central room 
     public int central_room_size=5;
+    public int central_room_size_x = 5;
+    public int central_room_size_y = 5;
     public int central_room_coordinate_x;
 
     //Grid creation
@@ -42,7 +44,7 @@ public class chunk_script : MonoBehaviour
     public GameObject[] tiles;
 
     //This is to create a queue for the doors spawner
-    Queue<int[]> queue = new Queue<int[]>();
+    public Queue<int[]> queue = new Queue<int[]>();
 
     public bool run = true;
     public bool run2 = true;
@@ -124,7 +126,7 @@ public class chunk_script : MonoBehaviour
             }
             else if(id==3)
             {
-                Debug.Log("HEre");
+                //Debug.Log("HEre");
                 created = Instantiate(current, a, Quaternion.Euler(new Vector3(-90,0,0)), block.stairs_parent.transform);
                 Vector3 scale_of_object = created.transform.localScale;
                 created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_y * scale_of_object.y);
@@ -164,11 +166,14 @@ public class chunk_script : MonoBehaviour
         //central_room_creator();
         while (queue.Any())
         {
-            //execute_queue();
+            //execute_queue();///copy the queue from here
             queueexecute();
         }
         //cover_rest();
+        //change_orientation_of_blocks();
         central_room_creator();
+        change_orientation_of_blocks();
+
     }
 
     private void addqueue(int x,int y, int z)
@@ -187,10 +192,10 @@ public class chunk_script : MonoBehaviour
         for (int k = 0; k < no_of_floors; k++)
         {
             //Debug.Log("here 1");
-            for (int i = central_room_coordinate_x - central_room_size - step ; i < central_room_coordinate_x + central_room_size +step; i++)
+            for (int i = central_room_coordinate_x - central_room_size_x /*- step*/ ; i < central_room_coordinate_x + central_room_size_x /*+step*/; i++)
             {
                // Debug.Log(i);
-                for (int j = central_room_coordinate_x - central_room_size - step ; j < central_room_coordinate_x + central_room_size +step; j++)
+                for (int j = central_room_coordinate_x - central_room_size_y /*- step*/ ; j < central_room_coordinate_x + central_room_size_y /*+step*/; j++)
                 {
                     //Debug.Log(j);
                     chunks[i, j, k].un_collapse();
@@ -290,7 +295,7 @@ public class chunk_script : MonoBehaviour
         {
             if (chunks[x_origin, y_origin, z_origin + 1].id == 1)
             {
-                Debug.Log("This is executed");
+                //Debug.Log("This is executed");
                 chunks[x_origin,y_origin, z_origin].un_collapse();
                 chunks[x_origin, y_origin, z_origin] = new block(x_origin, y_origin, z_origin, tiles[3], room_x_scale, room_y_scale, room_z_scale, 3);
                 chunks[x_origin, y_origin, z_origin].set_collapsed();
@@ -353,7 +358,8 @@ public class chunk_script : MonoBehaviour
                         int sum = orient[0] * 1000 + orient[1] * 100 + orient[2] * 10 + orient[3] ;
                         GameObject obj = blend_blocks[0];
                         int[] rot = new int[3];
-                        switch(sum)
+                        //Debug.Log(sum);
+                        switch (sum)
                         {
                             case 0000:
                                 obj = blend_blocks[5];
@@ -500,6 +506,175 @@ public class chunk_script : MonoBehaviour
         yield return null; 
     }
 
+    private void change_orientation_of_blocks()
+    {
+        for (int i = 1; i < grid_size-1; i++)
+        {
+            for (int j = 1; j < grid_size-1; j++)
+            {
+                for (int k = 0; k < no_of_floors; k++)
+                {
+                    if (chunks[i, j, k].id == 0)
+                    {
+                        
+                        int[] orient = new int[4];
+                        /*if (chunks[i - 1 > 0 ? i - 1 : i, j, k] == null)
+                            orient[0] = 0;*/
+                        if (chunks[i - 1 > 0 ? i - 1 : i, j, k].id == 1)
+                            orient[0] = 1;
+                        else
+                            orient[0] = 0;
+                        /*if (chunks[i, j - 1 > 0 ? j - 1 : j, k] == null)
+                            orient[1] = 0;*/
+                        if (chunks[i, j - 1 > 0 ? j - 1 : j, k].id == 1)
+                            orient[1] = 1;
+                        else
+                            orient[1] = 0;
+                        /*if (chunks[i + 1 < grid_size ? i + 1 : i, j, k] == null)
+                            orient[2] = 0;*/
+                        if (chunks[i + 1 < grid_size ? i + 1 : i, j, k].id == 1)
+                            orient[2] = 1;
+                        else
+                            orient[2] = 0;
+                        /*if (chunks[i, j + 1 > grid_size ? j + 1 : j, k] == null)
+                            orient[3] = 0;*/
+                        if (chunks[i, j + 1 > 0 ? j + 1 : j, k].id == 1)
+                            orient[3] = 1;
+                        else
+                            orient[3] = 0;
+                        Debug.Log(orient[0] + "" + orient[1] + "" + orient[2] + "" + orient[3] + "");
+                        int sum = orient[0] * 1000 + orient[1] * 100 + orient[2] * 10 + orient[3];
+                        GameObject obj = blend_blocks[0];
+                        int[] rot = new int[3];
+                        
+                        switch (sum)
+                        {
+                            case 0000:
+                                obj = blend_blocks[5];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 1000:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0100:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 0010:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = -90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0001:
+                                obj = blend_blocks[0];
+                                rot[0] = 0;
+                                rot[1] = -180;
+                                rot[2] = 0;
+                                break;
+
+                            case 1100:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 0110:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = -90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0011:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = -180;
+                                rot[2] = 0;
+                                break;
+
+                            case 1001:
+                                obj = blend_blocks[1];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1010:
+                                obj = blend_blocks[4];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 0101:
+                                obj = blend_blocks[4];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 1110:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            case 0111:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = -90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1011:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = -180;
+                                rot[2] = 0;
+                                break;
+
+                            case 1101:
+                                obj = blend_blocks[2];
+                                rot[0] = 0;
+                                rot[1] = 90;
+                                rot[2] = 0;
+                                break;
+
+                            case 1111:
+                                obj = blend_blocks[3];
+                                rot[0] = 0;
+                                rot[1] = 0;
+                                rot[2] = 0;
+                                break;
+
+                            default:
+                                break;
+                        }
+                        chunks[i, j, k].un_collapse();
+                        chunks[i, j, k] = new block(i, j, k, obj, room_x_scale, room_y_scale, room_z_scale, 0);
+                        chunks[i, j, k].set_collapsed();
+                        chunks[i, j, k].rotate(rot[0], rot[2], rot[1]);
+                    }
+                }
+
+            }
+        }
+    }
+
     public void queueexecute()
     {
         int[] coordinate = queue.Peek();
@@ -529,6 +704,7 @@ public class chunk_script : MonoBehaviour
                 }
             }
             chunks[x_path, coordinate[1], coordinate[2]].un_collapse();
+
             chunks[x_path, coordinate[1], coordinate[2]] = new block(x_path, coordinate[1], coordinate[2], tiles[1], room_x_scale, room_y_scale, room_z_scale, 1);
             chunks[x_path, coordinate[1], coordinate[2]].set_collapsed();
 
@@ -566,7 +742,7 @@ public class chunk_script : MonoBehaviour
         {
             if (chunks[coordinate[0], coordinate[1], coordinate[2] + 1].id == 1)
             {
-                Debug.Log("This is executed");
+                //Debug.Log("This is executed");
                 chunks[coordinate[0], coordinate[1], coordinate[2]].un_collapse();
                 chunks[coordinate[0], coordinate[1], coordinate[2]] = new block(coordinate[0], coordinate[1], coordinate[2], tiles[3], room_x_scale, room_y_scale, room_z_scale, 3);
                 chunks[coordinate[0], coordinate[1], coordinate[2]].set_collapsed();
