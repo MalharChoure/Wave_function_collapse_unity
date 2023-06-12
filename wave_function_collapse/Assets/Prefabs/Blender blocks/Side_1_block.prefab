@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556214062821952158}
   - component: {fileID: 3168695432906889338}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Side_1_block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5644171402288989996, guid: 753da7262f5f18446aec914257969b9a, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 753da7262f5f18446aec914257969b9a, type: 3}

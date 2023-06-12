@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4371512159755452139}
   - component: {fileID: 8594672957001646534}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Side_3_block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1153442409978928832, guid: 743d7fbfbfbd18d4a9fb8b95467ebc53, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1978427755519483250, guid: 743d7fbfbfbd18d4a9fb8b95467ebc53, type: 3}
       propertyPath: m_RootOrder
