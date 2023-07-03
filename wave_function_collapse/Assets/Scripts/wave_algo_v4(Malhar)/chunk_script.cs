@@ -8,6 +8,13 @@ using UnityEngine;
 
 public class chunk_script : MonoBehaviour
 {
+    private static int curr_block_list_index = 0;
+    private static int max_block_list_index = CreateChildGameObjects.childGameObjectsCount;
+
+    private static int curr_block_count = 0;
+    private static int index_change_threshold = 100;
+
+
     //The integers required to fill out the room blocks.
     public int grid_size=10;
     public int padding=2;
@@ -67,7 +74,11 @@ public class chunk_script : MonoBehaviour
         public float block_offset_z = 0f;
 
         public int id;
-        public static GameObject block_parent= GameObject.Find("Blocks");
+
+        // modifying this block_parent to block_parent_list which will store all the child gameObject onto which the chunks will be combined
+        public static GameObject block_parent_list = GameObject.Find("BlocksP");
+
+        //public static GameObject block_parent= GameObject.Find("Blocks");
         public static GameObject ground_parent=GameObject.Find("Tiles");
         public static GameObject stairs_parent = GameObject.Find("Stairsv2");
         public static GameObject doors_parent = GameObject.Find("Doors");
@@ -120,7 +131,14 @@ public class chunk_script : MonoBehaviour
             }
             else if (id == 0)
             {
-                created = Instantiate(current, a, Quaternion.identity, block.block_parent.transform);
+                chunk_script.curr_block_count++;
+                if (chunk_script.curr_block_count >= chunk_script.index_change_threshold)
+                {
+                    chunk_script.curr_block_count = 0;
+                    chunk_script.curr_block_list_index = (chunk_script.curr_block_list_index + 1) % chunk_script.max_block_list_index;
+                }
+
+                created = Instantiate(current, a, Quaternion.identity, block.block_parent_list.transform.Find(chunk_script.curr_block_list_index.ToString()));
                 Vector3 scale_of_object = created.transform.localScale;
                 created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_y * scale_of_object.y);
             }
@@ -156,6 +174,8 @@ public class chunk_script : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(GameObject.Find("BlocksP").transform.childCount);
+
         chunks = new block[grid_size, grid_size, no_of_floors];
         central_room_coordinate_x = Mathf.Abs(grid_size / 2);
         central_room_size = central_room_size > grid_size ?(grid_size/2)-padding:central_room_size;
@@ -306,14 +326,37 @@ public class chunk_script : MonoBehaviour
         }
     }
 
+
+    private IEnumerator ChunkFall(Transform chunk)
+    {
+        float chunk_fall_speed = Random.Range(40, 150);
+        while (chunk.transform.position.y > 0)
+        {
+            chunk.position -= new Vector3(0, chunk_fall_speed * Time.deltaTime, 0);
+            yield return null;
+        }
+        chunk.transform.position = Vector3.zero;
+    }
+
+    void MakeChunksFallFromSky()
+    {
+        GameObject BlocksP = GameObject.Find("BlocksP");
+
+        foreach (Transform blocks in BlocksP.transform)
+        {
+            blocks.transform.position = new Vector3(0, 1000, 0);
+            StartCoroutine(ChunkFall(blocks));
+        }
+    }
+
     private void Update()
     {
 
         if(run)
         {
             run = false;
- 
             call_mesh_combiner();
+            MakeChunksFallFromSky();
         }
 
 
@@ -488,7 +531,10 @@ public class chunk_script : MonoBehaviour
     
     private void call_mesh_combiner()
     {
-        GameObject.Find("Blocks").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        for (int i = 0; i < max_block_list_index; i++)
+        {
+            GameObject.Find("BlocksP").transform.Find(i.ToString()).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        }
         GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
 
         //GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
