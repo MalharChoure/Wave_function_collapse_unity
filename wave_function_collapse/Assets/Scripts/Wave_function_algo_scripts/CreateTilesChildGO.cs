@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateChildGameObjects : MonoBehaviour
+public class CreateTilesChildGO : MonoBehaviour
 {
-    public static int childGameObjectsCount = 100;
+    public static int childGameObjectsCount = 10;
 
     // Start is called before the first frame update
     void Start()

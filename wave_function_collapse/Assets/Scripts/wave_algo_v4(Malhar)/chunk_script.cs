@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
+using System;
 using UnityEngine;
 
 public class chunk_script : MonoBehaviour
 {
+    // added by harsh to animate the blocks and tiles
+
+    // blocks
     private static int curr_block_list_index = 0;
     private static int max_block_list_index = CreateChildGameObjects.childGameObjectsCount;
 
     private static int curr_block_count = 0;
-    private static int index_change_threshold = 100;
+    private static int blocks_index_change_threshold = 100;
+
+    // tiles
+    private static int curr_tile_list_index = 0;
+    private static int max_tile_list_index = CreateTilesChildGO.childGameObjectsCount;
+
+    private static int curr_tile_count = 0;
+    private static int tiles_index_change_threshold = 50;
 
 
     //The integers required to fill out the room blocks.
@@ -63,7 +73,7 @@ public class chunk_script : MonoBehaviour
         private int y;
         private int z;
         public GameObject current;
-        private bool collapsed = false;
+        public bool collapsed = false;
         int room_x;
         int room_y;
         int room_z;
@@ -77,9 +87,10 @@ public class chunk_script : MonoBehaviour
 
         // modifying this block_parent to block_parent_list which will store all the child gameObject onto which the chunks will be combined
         public static GameObject block_parent_list = GameObject.Find("BlocksP");
+        public static GameObject tile_parent_list = GameObject.Find("TilesP");
 
         //public static GameObject block_parent= GameObject.Find("Blocks");
-        public static GameObject ground_parent=GameObject.Find("Tiles");
+        //public static GameObject ground_parent=GameObject.Find("Tiles");
         public static GameObject stairs_parent = GameObject.Find("Stairsv2");
         public static GameObject doors_parent = GameObject.Find("Doors");
 
@@ -125,14 +136,22 @@ public class chunk_script : MonoBehaviour
             
             if (id == 1)
             {
-                created = Instantiate(current, a, Quaternion.identity, block.ground_parent.transform);
+                curr_tile_count++;
+
+                if (curr_tile_count >= tiles_index_change_threshold)
+                {
+                    curr_tile_count = 0;
+                    curr_tile_list_index = (curr_tile_list_index + 1) % max_tile_list_index;
+                }
+
+                created = Instantiate(current, a, Quaternion.identity, block.tile_parent_list.transform.Find(curr_tile_list_index.ToString()));
                 Vector3 scale_of_object = created.transform.localScale;
                 created.transform.localScale = new Vector3(room_x*scale_of_object.x, room_z*scale_of_object.z, room_y*scale_of_object.y);
             }
             else if (id == 0)
             {
                 chunk_script.curr_block_count++;
-                if (chunk_script.curr_block_count >= chunk_script.index_change_threshold)
+                if (chunk_script.curr_block_count >= chunk_script.blocks_index_change_threshold)
                 {
                     chunk_script.curr_block_count = 0;
                     chunk_script.curr_block_list_index = (chunk_script.curr_block_list_index + 1) % chunk_script.max_block_list_index;
@@ -174,7 +193,7 @@ public class chunk_script : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(GameObject.Find("BlocksP").transform.childCount);
+        //Debug.Log(GameObject.Find("BlocksP").transform.childCount);
 
         chunks = new block[grid_size, grid_size, no_of_floors];
         central_room_coordinate_x = Mathf.Abs(grid_size / 2);
@@ -329,7 +348,7 @@ public class chunk_script : MonoBehaviour
 
     private IEnumerator ChunkFall(Transform chunk)
     {
-        float chunk_fall_speed = Random.Range(40, 150);
+        float chunk_fall_speed = UnityEngine.Random.Range(40, 150);
         while (chunk.transform.position.y > 0)
         {
             chunk.position -= new Vector3(0, chunk_fall_speed * Time.deltaTime, 0);
@@ -349,17 +368,129 @@ public class chunk_script : MonoBehaviour
         }
     }
 
+    IEnumerator TileFall(Transform tile)
+    {
+        float tile_fall_speed = UnityEngine.Random.Range(40, 150);
+        while (tile.transform.position.y >= 0)
+        {
+            tile.position -= new Vector3(0, tile_fall_speed * Time.deltaTime, 0);
+            yield return null;
+        }
+        tile.transform.position = Vector3.zero;
+    }
+
+    void MakeFloorFallFromSky()
+    {
+        GameObject TilesP = GameObject.Find("TilesP");
+
+        foreach (Transform tile in TilesP.transform)
+        {
+            tile.transform.position = new Vector3(0, 400, 0);
+            StartCoroutine(TileFall(tile));
+        }
+    }
+
+
+    void CubeSegments()
+    {
+
+        // since the default grid size is 100, i am making 100 (10 x 10) blocks so that they can fall from sky in blocked fashion instead of random.
+        // this needs to be changed if the grid size if changed or if it is not a multiple of 10
+
+        GameObject BlocksP2 = GameObject.Find("BlocksP2");
+
+        // this will run (grid_size x grid_size) times
+        for (int i = 0; i < grid_size; i += 10)
+        {
+            for (int j = 0; j < grid_size; j += 10)
+            {
+                string id = (i.ToString() + "_" + j.ToString());
+
+                GameObject go = new GameObject(id);
+                go.transform.parent = BlocksP2.transform;
+                go.AddComponent<Mesh_combiner_script_call>();
+
+                for (int ii = i; ii < i + 10; ii++)
+                {
+                    for (int jj = j; jj < j + 10; jj++)
+                    {
+                        for (int k = 0; k < no_of_floors; k++)
+                        {
+                            if (chunks[ii, jj, k].id == 0)
+                            {
+                                GameObject created = chunks[ii, jj, k].created;
+                                created.transform.parent = go.transform;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    IEnumerator ChunkFallV2(Transform blockChunk)
+    {
+        float fallSpeed = UnityEngine.Random.Range(40, 150);
+
+        blockChunk.position = new Vector3(0, 500, 0);
+
+        while (blockChunk.position.y > 0)
+        {
+            blockChunk.position -= new Vector3(0, fallSpeed * Time.deltaTime, 0);
+            yield return null;
+        }
+
+        blockChunk.transform.position = Vector3.zero;
+    }
+
+    void MakeChunksFallFromSkyV2()
+    {
+        GameObject BlocksV2 = GameObject.Find("BlocksP2");
+
+        foreach (Transform BlockChunk in BlocksV2.transform)
+        {
+            StartCoroutine(ChunkFallV2(BlockChunk));
+        }
+    }
+
+    void CombineCubeSegments()
+    {
+        GameObject BlocksP2 = GameObject.Find("BlocksP2");
+
+        BlocksP2.transform.GetChild(10).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+
+        for (int i = 0; i < BlocksP2.transform.childCount; i++)
+        {
+            BlocksP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        }
+
+        for (int i = 0; i < max_tile_list_index; i++)
+        {
+            GameObject.Find("TilesP").transform.Find(i.ToString()).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        }
+
+        /*foreach (Transform cubeSegment in BlocksP2.transform)
+        {
+            cubeSegment.gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        }*/
+    }
+
     private void Update()
     {
 
-        if(run)
+        if (run)
         {
             run = false;
-            call_mesh_combiner();
-            MakeChunksFallFromSky();
+            //call_mesh_combiner();
+            //MakeChunksFallFromSky();
+            //MakeFloorFallFromSky();
+
+            // this will break the whole mesh into 10 x 10 cubes so that it looks good when they fall from the sky
+            CubeSegments();
+            CombineCubeSegments();
+            MakeChunksFallFromSkyV2();
+            MakeFloorFallFromSky();
         }
-
-
     }
 
     private void cover_rest()
@@ -535,7 +666,12 @@ public class chunk_script : MonoBehaviour
         {
             GameObject.Find("BlocksP").transform.Find(i.ToString()).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         }
-        GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+
+        for (int i = 0; i < max_tile_list_index; i++)
+        {
+            GameObject.Find("TilesP").transform.Find(i.ToString()).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        }
+        //GameObject.Find("Tiles").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
 
         //GameObject.Find("Stairs").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         //GameObject.Find("Doors").GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
