@@ -1030,6 +1030,10 @@ PrefabInstance:
       propertyPath: endReachedDistance
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+      propertyPath: autoRepath.maximumInterval
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 889049513753946905, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
       propertyPath: target
       value: 
