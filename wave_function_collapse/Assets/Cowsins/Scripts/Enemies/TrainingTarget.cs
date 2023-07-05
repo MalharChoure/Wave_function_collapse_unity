@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TrainingTarget : Enemy
 {
-    [SerializeField]private float timeToRevive;
+    [SerializeField]private float timeToDie = 3;
 
     private bool isDead = false;
 
@@ -10,16 +10,17 @@ public class TrainingTarget : Enemy
     {
         if (isDead) return;
         base.Damage(damage);
-        GetComponent<Animator>().Play("Target_Hit");
+        // GetComponent<Animator>().Play("Target_Hit");
     }
     public override void Die()
     {
         if (isDead) return;
         isDead = true;
         events.OnDeath.Invoke();
-        //Invoke("Revive", timeToRevive);
+        GetComponent<Animator>().Play("Dying_2");
+		Invoke("onDie", timeToDie);
 
-        if(shieldSlider != null)shieldSlider.gameObject.SetActive(false);
+		if (shieldSlider != null)shieldSlider.gameObject.SetActive(false);
         if (healthSlider != null) healthSlider.gameObject.SetActive(false);
 
         if (UI.GetComponent<UIController>().displayEvents)
@@ -28,10 +29,16 @@ public class TrainingTarget : Enemy
         }
 
         if (transform.parent.GetComponent<CompassElement>() != null) transform.parent.GetComponent<CompassElement>().Remove(); 
-        Destroy(gameObject.transform.parent.gameObject);
+        
 
         //GetComponent<Animator>().Play("Target_Die"); 
     }
+
+    private void onDie()
+    {
+	    Destroy(gameObject.transform.parent.gameObject);
+	}
+
     private void Revive()
     {
         isDead = false;

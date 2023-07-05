@@ -1702,7 +1702,7 @@ MonoBehaviour:
     OnDeath:
       m_PersistentCalls:
         m_Calls: []
-  timeToRevive: 5
+  timeToDie: 2.11
 --- !u!114 &8010322405159772806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1710,7 +1710,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7168859912311056180}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09faeb61852e218499ed54955d46f6ba, type: 3}
   m_Name: 
