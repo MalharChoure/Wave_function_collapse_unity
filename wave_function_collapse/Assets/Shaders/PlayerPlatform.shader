@@ -9,7 +9,7 @@ Shader "Unlit/PlayerPlatform"
 
         Pass
         {
-            Cull Front
+            Cull Back
             ZWrite Off
             ZTest LEqual
             Blend DstColor   Zero

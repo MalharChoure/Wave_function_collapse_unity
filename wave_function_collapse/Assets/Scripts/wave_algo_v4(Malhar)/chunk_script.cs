@@ -381,9 +381,9 @@ public class chunk_script : MonoBehaviour
 
     void MakeFloorFallFromSky()
     {
-        GameObject TilesP = GameObject.Find("TilesP");
+        GameObject TilesP2 = GameObject.Find("TilesP2");
 
-        foreach (Transform tile in TilesP.transform)
+        foreach (Transform tile in TilesP2.transform)
         {
             tile.transform.position = new Vector3(0, 400, 0);
             StartCoroutine(TileFall(tile));
@@ -398,6 +398,7 @@ public class chunk_script : MonoBehaviour
         // this needs to be changed if the grid size if changed or if it is not a multiple of 10
 
         GameObject BlocksP2 = GameObject.Find("BlocksP2");
+        GameObject TilesP2 = GameObject.Find("TilesP2");
 
         // this will run (grid_size x grid_size) times
         for (int i = 0; i < grid_size; i += 10)
@@ -410,6 +411,10 @@ public class chunk_script : MonoBehaviour
                 go.transform.parent = BlocksP2.transform;
                 go.AddComponent<Mesh_combiner_script_call>();
 
+                GameObject go_floor = new GameObject(id);
+                go_floor.transform.parent = TilesP2.transform;
+                go_floor.AddComponent<Mesh_combiner_script_call>();
+
                 for (int ii = i; ii < i + 10; ii++)
                 {
                     for (int jj = j; jj < j + 10; jj++)
@@ -420,6 +425,10 @@ public class chunk_script : MonoBehaviour
                             {
                                 GameObject created = chunks[ii, jj, k].created;
                                 created.transform.parent = go.transform;
+                            }else if (chunks[ii, jj, k].id == 1)
+                            {
+                                GameObject created = chunks[ii, jj, k].created;
+                                created.transform.parent = go_floor.transform;
                             }
                         }
                     }
@@ -456,18 +465,22 @@ public class chunk_script : MonoBehaviour
     void CombineCubeSegments()
     {
         GameObject BlocksP2 = GameObject.Find("BlocksP2");
-
-        BlocksP2.transform.GetChild(10).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        GameObject TilesP2 = GameObject.Find("TilesP2");
 
         for (int i = 0; i < BlocksP2.transform.childCount; i++)
         {
             BlocksP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         }
 
-        for (int i = 0; i < max_tile_list_index; i++)
+        for (int i = 0; i < TilesP2.transform.childCount; i++)
+        {
+            TilesP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+        }
+
+        /*for (int i = 0; i < max_tile_list_index; i++)
         {
             GameObject.Find("TilesP").transform.Find(i.ToString()).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-        }
+        }*/
 
         /*foreach (Transform cubeSegment in BlocksP2.transform)
         {
