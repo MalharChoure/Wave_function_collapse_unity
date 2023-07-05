@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour, IDamageable
             GameObject popup = Instantiate(damagePopUp,transform.position,Quaternion.identity) as GameObject;
          if (oldDmg / Mathf.FloorToInt(oldDmg) == 1)
             popup.transform.GetChild(0).GetComponent<TMP_Text>().text = oldDmg.ToString("F0");
-            else 
+         else 
             popup.transform.GetChild(0).GetComponent<TMP_Text>().text = oldDmg.ToString("F1");
             float xRand = Random.Range(-xVariation, xVariation);
             popup.transform.position = popup.transform.position + new Vector3(xRand, 0, 0);

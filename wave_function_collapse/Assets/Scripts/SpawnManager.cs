@@ -81,7 +81,7 @@ public class SpawnManager : MonoBehaviour
         foreach (GameObject t in spawnPoints)
         {
             Transform enemy = Instantiate(enemyPrefab, t.transform.position, Quaternion.identity);
-            enemy.gameObject.GetComponent<AIDestinationSetter>().target = player;
+            enemy.gameObject.GetComponentInChildren<AIDestinationSetter>().target = player;
            enemies.Add(enemy.gameObject);
         }
 

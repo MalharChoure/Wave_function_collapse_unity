@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
                 hit = true;
                 return;
             }
-            if (other.GetComponent<IDamageable>() !=null && !hit && !other.CompareTag("Player"))
+            if (other.GetComponent<IDamageable>() !=null && !hit && !other.CompareTag("Enemy"))
             {
                 other.GetComponent<IDamageable>().Damage(damage);
                 DestroyProjectile();

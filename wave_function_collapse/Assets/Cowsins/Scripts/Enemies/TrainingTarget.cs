@@ -17,7 +17,7 @@ public class TrainingTarget : Enemy
         if (isDead) return;
         isDead = true;
         events.OnDeath.Invoke();
-        Invoke("Revive", timeToRevive);
+        //Invoke("Revive", timeToRevive);
 
         if(shieldSlider != null)shieldSlider.gameObject.SetActive(false);
         if (healthSlider != null) healthSlider.gameObject.SetActive(false);
@@ -28,8 +28,9 @@ public class TrainingTarget : Enemy
         }
 
         if (transform.parent.GetComponent<CompassElement>() != null) transform.parent.GetComponent<CompassElement>().Remove(); 
+        Destroy(gameObject.transform.parent.gameObject);
 
-        GetComponent<Animator>().Play("Target_Die"); 
+        //GetComponent<Animator>().Play("Target_Die"); 
     }
     private void Revive()
     {
