@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System;
 using UnityEngine;
-
+using Pathfinding;
 public class chunk_script : MonoBehaviour
-{
+{//harsh
     // added by harsh to animate the blocks and tiles
 
     // blocks
@@ -59,6 +59,7 @@ public class chunk_script : MonoBehaviour
 
     //The tiles that are to be actually placed
     public GameObject[] tiles;
+    List<GameObject> tiless;
 
     //This is to create a queue for the doors spawner
     public Queue<int[]> queue = new Queue<int[]>();
@@ -66,7 +67,8 @@ public class chunk_script : MonoBehaviour
     public bool run = true;
     public bool run2 = true;
 
-
+    int noOfCoroutinesRunning = 0;
+    public bool isGridGenerated = false;
     class block
     {
         private int x;
@@ -370,6 +372,7 @@ public class chunk_script : MonoBehaviour
 
     IEnumerator TileFall(Transform tile)
     {
+        noOfCoroutinesRunning++;
         float tile_fall_speed = UnityEngine.Random.Range(40, 150);
         while (tile.transform.position.y >= 0)
         {
@@ -377,6 +380,19 @@ public class chunk_script : MonoBehaviour
             yield return null;
         }
         tile.transform.position = Vector3.zero;
+        noOfCoroutinesRunning--;
+        if (noOfCoroutinesRunning==0)
+        {
+            AstarData.active.Scan();
+            GameObject TilesP2 = GameObject.Find("TilesP2");
+
+            for (int i = 0; i < TilesP2.transform.childCount; i++)
+            {
+                TilesP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+            }
+            isGridGenerated = true;
+            GameObject.Find("PlatformForPlayer").transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 
     void MakeFloorFallFromSky()
@@ -388,6 +404,7 @@ public class chunk_script : MonoBehaviour
             tile.transform.position = new Vector3(0, 400, 0);
             StartCoroutine(TileFall(tile));
         }
+        
     }
 
 
@@ -465,17 +482,13 @@ public class chunk_script : MonoBehaviour
     void CombineCubeSegments()
     {
         GameObject BlocksP2 = GameObject.Find("BlocksP2");
-        GameObject TilesP2 = GameObject.Find("TilesP2");
 
         for (int i = 0; i < BlocksP2.transform.childCount; i++)
         {
             BlocksP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
         }
 
-        for (int i = 0; i < TilesP2.transform.childCount; i++)
-        {
-            TilesP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-        }
+        
 
         /*for (int i = 0; i < max_tile_list_index; i++)
         {
@@ -503,6 +516,7 @@ public class chunk_script : MonoBehaviour
             CombineCubeSegments();
             MakeChunksFallFromSkyV2();
             MakeFloorFallFromSky();
+
         }
     }
 
@@ -947,4 +961,56 @@ public class chunk_script : MonoBehaviour
             }
         }
     }
+
+    public List<GameObject> GetSpawnPoints(Transform player, int numberOfEnemies, int minEnemyDistance, int maxEnemeyDistance)
+    {
+
+        Vector3 playerWorldPoition = player.TransformPoint(Vector3.zero);
+        int count = 0;
+        tiless = new List<GameObject>();
+
+        foreach (block b in chunks)
+        {
+            count++;
+            if (b.id == 1 &&
+                (Vector3.Distance(b.created.transform.position, playerWorldPoition) < maxEnemeyDistance && Vector3.Distance(b.created.transform.position, playerWorldPoition) > minEnemyDistance))
+            {
+                tiless.Add(b.created);
+            }
+        }
+
+        List<float> distances = new List<float>();
+        foreach (GameObject b in tiless)
+        {
+            float distance = Mathf.Abs(b.transform.position.y - playerWorldPoition.y);
+            distances.Add(distance);
+        }
+
+        float maxDistance = distances.Count > 0 ? distances.Max() : 1f;
+        List<float> normalizedDistances = distances.Select(d => maxDistance - d).ToList();
+
+
+        List<float> weights = normalizedDistances.Select(d => Mathf.Exp(d)).ToList();
+        List<GameObject> selectedObjects = new List<GameObject>();
+
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            float totalWeight = weights.Sum();
+            float randNum = UnityEngine.Random.Range(0f, totalWeight);
+            float cumulativeWeight = 0f;
+
+            for (int j = 0; j < tiless.Count; j++)
+            {
+                cumulativeWeight += weights[j];
+                if (randNum <= cumulativeWeight)
+                {
+                    selectedObjects.Add(tiless[j]);
+                    break;
+                }
+            }
+        }
+
+        return selectedObjects;
+    }
+
 }
