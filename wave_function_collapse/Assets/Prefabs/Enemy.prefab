@@ -1024,11 +1024,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
       propertyPath: slowdownDistance
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
       propertyPath: endReachedDistance
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
       propertyPath: autoRepath.maximumInterval
@@ -1654,6 +1654,21 @@ CapsuleCollider:
   m_Height: 0.11
   m_Direction: 1
   m_Center: {x: 0, y: 0.07, z: 0}
+--- !u!114 &872379265914404220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168859912311056180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3cbc9fbf49f6894ea37ced618e025cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitialStateType: 0
+  playerTransform: {fileID: 0}
+  maxSightDistance: 20
 --- !u!114 &8010322405159772788
 MonoBehaviour:
   m_ObjectHideFlags: 0
