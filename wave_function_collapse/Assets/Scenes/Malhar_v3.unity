@@ -1754,12 +1754,12 @@ MonoBehaviour:
   max_no_of_rooms: 60
   min_no_of_rooms: 50
   blend_blocks:
-  - {fileID: 7288575743254786603, guid: 5814b9b0b41c08e4d85a95b373931d56, type: 3}
-  - {fileID: 3093429254685768995, guid: 6f550bc752438e040b5a1a9f0ca20153, type: 3}
-  - {fileID: 274334916524571039, guid: 10e1bfbbe6fc2a344a51c0801ca56241, type: 3}
-  - {fileID: 3295045022784166248, guid: 2dcca3f67781c1d42a6afdc7909e53a9, type: 3}
-  - {fileID: 593143688772235373, guid: 1eafcb178ae43e2409149535f93b307b, type: 3}
-  - {fileID: 3342661842666284991, guid: 05236032d4f032a4090dde65a4a4aa3c, type: 3}
+  - {fileID: 7385471981750715886, guid: d1f8f767350535446827d5397762ed09, type: 3}
+  - {fileID: 8938796647828538282, guid: 0e43f4abeadd4014b96d70e8a90a4298, type: 3}
+  - {fileID: 3178103383713432061, guid: e984a4860c15e124bbb963076ba747b7, type: 3}
+  - {fileID: 5675777939515377956, guid: dc3770b3682d3e148b73ac42a3b740ea, type: 3}
+  - {fileID: 8908809492624827073, guid: d38757387435eb147a8d40bb83a4bbb6, type: 3}
+  - {fileID: 6551509538046857342, guid: 98da011943fc5bf41b0f851942ab6821, type: 3}
   room_x_scale: 2
   room_y_scale: 2
   room_z_scale: 2
@@ -2897,7 +2897,7 @@ MonoBehaviour:
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
     cacheStartup: 0
-  showNavGraphs: 1
+  showNavGraphs: 0
   showUnwalkableNodes: 1
   debugMode: 0
   debugFloor: 0
