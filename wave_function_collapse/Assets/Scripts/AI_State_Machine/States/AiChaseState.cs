@@ -30,6 +30,8 @@ public class AiChaseState : AiState
 
 	public void Exit(AiAgent agent)
 	{
-		throw new System.NotImplementedException();
-	}
+        agent.GetComponent<AIDestinationSetter>().enabled = false;
+        agent.GetComponent<AIPath>().enabled = false;
+        agent.GetComponent<Seeker>().enabled = false;
+    }
 }

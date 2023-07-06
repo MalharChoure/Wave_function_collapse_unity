@@ -1,16 +1,19 @@
 using Pathfinding;
+using Pathfinding.RVO.Sampled;
 using UnityEngine;
 
 public class TrainingTarget : Enemy
 {
     [SerializeField]private float timeToDie = 3;
     AIPath aiPath;
+    AiAgent aiAgent;
     private bool isDead = false;
 
     public override void Damage(float damage)
     {
         if (isDead) return;
         base.Damage(damage);
+        aiAgent = GetComponent<AiAgent>();
         // GetComponent<Animator>().Play("Target_Hit");
     }
     public override void Die()
@@ -36,7 +39,8 @@ public class TrainingTarget : Enemy
         GetComponent<AIDestinationSetter>().enabled = false;
         GetComponent<AIPath>().enabled = false;
         GetComponent<Seeker>().enabled = false;
-	}
+        aiAgent.stateMachine.ChangeState(AiStateType.Dead);
+    }
 
 	private void onDie()
     {

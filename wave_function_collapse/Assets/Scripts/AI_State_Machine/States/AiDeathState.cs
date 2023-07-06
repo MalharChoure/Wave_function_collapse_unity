@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,16 +12,21 @@ public class AiDeathState : AiState
 
     public void Enter(AiAgent agent)
     {
-	    throw new System.NotImplementedException();
+        agent.GetComponent<AIDestinationSetter>().enabled = false;
+        agent.GetComponent<AIPath>().enabled = false;
+        agent.GetComponent<Seeker>().enabled = false;
     }
 
     public void Update(AiAgent agent)
     {
-	    throw new System.NotImplementedException();
+
+        agent.GetComponent<AIDestinationSetter>().enabled = false;
+        agent.GetComponent<AIPath>().enabled = false;
+        agent.GetComponent<Seeker>().enabled = false; 
     }
 
     public void Exit(AiAgent agent)
     {
-	    throw new System.NotImplementedException();
+        Debug.Log("lalalal");
     }
 }
