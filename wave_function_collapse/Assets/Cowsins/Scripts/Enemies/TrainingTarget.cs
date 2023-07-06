@@ -1,9 +1,10 @@
+using Pathfinding;
 using UnityEngine;
 
 public class TrainingTarget : Enemy
 {
     [SerializeField]private float timeToDie = 3;
-
+    AIPath aiPath;
     private bool isDead = false;
 
     public override void Damage(float damage)
@@ -16,9 +17,10 @@ public class TrainingTarget : Enemy
     {
         if (isDead) return;
         isDead = true;
-        events.OnDeath.Invoke();
+
+		events.OnDeath.Invoke();
         GetComponent<Animator>().Play("Dying_2");
-		Invoke("onDie", timeToDie);
+		// aiPath.maxSpeed = 0;
 
 		if (shieldSlider != null)shieldSlider.gameObject.SetActive(false);
         if (healthSlider != null) healthSlider.gameObject.SetActive(false);
@@ -28,13 +30,15 @@ public class TrainingTarget : Enemy
             UI.GetComponent<UIController>().AddKillfeed(name);
         }
 
-        if (transform.parent.GetComponent<CompassElement>() != null) transform.parent.GetComponent<CompassElement>().Remove(); 
-        
+        if (transform.parent.GetComponent<CompassElement>() != null) transform.parent.GetComponent<CompassElement>().Remove();
+        Invoke("onDie", timeToDie);
 
-        //GetComponent<Animator>().Play("Target_Die"); 
-    }
+        GetComponent<AIDestinationSetter>().enabled = false;
+        GetComponent<AIPath>().enabled = false;
+        GetComponent<Seeker>().enabled = false;
+	}
 
-    private void onDie()
+	private void onDie()
     {
 	    Destroy(gameObject.transform.parent.gameObject);
 	}

@@ -689,9 +689,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfWaves: 3
-  timeBetweenWaves: 15
+  timeBetweenWaves: 7
   _generator: {fileID: 1026187799}
-  numberOfEnemiesPerWave: 15
+  numberOfEnemiesPerWave: 5
   enemyPrefab: {fileID: 8010322403839505155, guid: 82cd0e9a169c868448af66d87bb327b5, type: 3}
   spawnPoints: []
   minEnemyDistance: 20
