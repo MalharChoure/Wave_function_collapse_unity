@@ -370,6 +370,25 @@ public class chunk_script : MonoBehaviour
         }
     }
 
+    IEnumerator CombineTilesAgainAfterFall()
+    {
+        GameObject TilesP2 = GameObject.Find("TilesP2");
+
+        foreach (Transform t in TilesP2.transform)
+        {
+            t.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
+            yield return null;
+        }
+    }
+
+    IEnumerator ScanGraph()
+    {
+        foreach (Progress p in AstarData.active.ScanAsync())
+        {
+            yield return null;
+        }
+    }
+
     IEnumerator TileFall(Transform tile)
     {
         noOfCoroutinesRunning++;
@@ -383,13 +402,10 @@ public class chunk_script : MonoBehaviour
         noOfCoroutinesRunning--;
         if (noOfCoroutinesRunning==0)
         {
-            AstarData.active.Scan();
-            GameObject TilesP2 = GameObject.Find("TilesP2");
 
-            for (int i = 0; i < TilesP2.transform.childCount; i++)
-            {
-                TilesP2.transform.GetChild(i).gameObject.GetComponent<Mesh_combiner_script_call>().call_mesh_combiner();
-            }
+            StartCoroutine(ScanGraph());
+            StartCoroutine(CombineTilesAgainAfterFall());
+
             isGridGenerated = true;
             GameObject.Find("PlatformForPlayer").transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -404,8 +420,9 @@ public class chunk_script : MonoBehaviour
             tile.transform.position = new Vector3(0, 400, 0);
             StartCoroutine(TileFall(tile));
         }
-        
     }
+
+
 
 
     void CubeSegments()
@@ -465,7 +482,6 @@ public class chunk_script : MonoBehaviour
             blockChunk.position -= new Vector3(0, fallSpeed * Time.deltaTime, 0);
             yield return null;
         }
-
         blockChunk.transform.position = Vector3.zero;
     }
 
