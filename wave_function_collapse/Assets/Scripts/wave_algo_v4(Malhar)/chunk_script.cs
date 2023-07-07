@@ -26,15 +26,22 @@ public class chunk_script : MonoBehaviour
 
 
     //The integers required to fill out the room blocks.
-    public int grid_size=10;
-    public int padding=2;
+    public int grid_size = 10;
+    public int padding = 2;
     public int max_room_size;
-    public int no_of_floors=2;
+    public int no_of_floors = 2;
     public int max_no_of_rooms = 5;
     public int min_no_of_rooms = 3;
 
     //the blender blocks are called here
-    public GameObject[] blend_blocks= new GameObject[6];
+    //public GameObject[] blend_blocks= new GameObject[6];
+
+    [System.Serializable]
+    public class blend_block
+        {
+            public List<GameObject> blocks = new List<GameObject>();
+        }
+    public List<blend_block> blend_blocks1 = new List<blend_block>();
 
     //scale of the room
     public int room_x_scale = 1;
@@ -168,7 +175,7 @@ public class chunk_script : MonoBehaviour
                 //Debug.Log("HEre");
                 created = Instantiate(current, a, Quaternion.Euler(new Vector3(-90,0,0)), block.stairs_parent.transform);
                 Vector3 scale_of_object = created.transform.localScale;
-                created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_y * scale_of_object.y);
+                created.transform.localScale = new Vector3(room_x * scale_of_object.x, room_z * scale_of_object.z, room_z * scale_of_object.y);
             }
             else if(id==4)
             {
@@ -573,118 +580,118 @@ public class chunk_script : MonoBehaviour
                             orient[3] = 0;
 
                         int sum = orient[0] * 1000 + orient[1] * 100 + orient[2] * 10 + orient[3] ;
-                        GameObject obj = blend_blocks[0];
+                        GameObject obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                         int[] rot = new int[3];
                         //Debug.Log(sum);
                         switch (sum)
                         {
                             case 0000:
-                                obj = blend_blocks[5];
+                                obj = blend_blocks1[5].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 1000:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0; 
                                 break;
 
                             case 0100:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 0010:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -90;
                                 rot[2] = 0;
                                 break;
 
                             case 0001:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -180;
                                 rot[2] = 0;
                                 break;
 
                             case 1100:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 0110:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -90;
                                 rot[2] = 0;
                                 break;
 
                             case 0011:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -180;
                                 rot[2] = 0;
                                 break;
 
                             case 1001:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 1010:
-                                obj = blend_blocks[4];
+                                obj = blend_blocks1[4].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 0101:
-                                obj = blend_blocks[4];
+                                obj = blend_blocks1[4].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 1110:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 0111:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -90;
                                 rot[2] = 0;
                                 break;
 
                             case 1011:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -180;
                                 rot[2] = 0;
                                 break;
 
                             case 1101:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 1111:
-                                obj = blend_blocks[3];
+                                obj = blend_blocks1[3].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
@@ -769,118 +776,118 @@ public class chunk_script : MonoBehaviour
                             orient[3] = 0;
                         Debug.Log(orient[0] + "" + orient[1] + "" + orient[2] + "" + orient[3] + "");
                         int sum = orient[0] * 1000 + orient[1] * 100 + orient[2] * 10 + orient[3];
-                        GameObject obj = blend_blocks[0];
+                        GameObject obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                         int[] rot = new int[3];
                         
                         switch (sum)
                         {
                             case 0000:
-                                obj = blend_blocks[5];
+                                obj = blend_blocks1[5].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 1000:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 0100:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 0010:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -90;
                                 rot[2] = 0;
                                 break;
 
                             case 0001:
-                                obj = blend_blocks[0];
+                                obj = blend_blocks1[0].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -180;
                                 rot[2] = 0;
                                 break;
 
                             case 1100:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 0110:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -90;
                                 rot[2] = 0;
                                 break;
 
                             case 0011:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -180;
                                 rot[2] = 0;
                                 break;
 
                             case 1001:
-                                obj = blend_blocks[1];
+                                obj = blend_blocks1[1].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 1010:
-                                obj = blend_blocks[4];
+                                obj = blend_blocks1[4].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 0101:
-                                obj = blend_blocks[4];
+                                obj = blend_blocks1[4].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 1110:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks[UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
                                 break;
 
                             case 0111:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks [UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -90;
                                 rot[2] = 0;
                                 break;
 
                             case 1011:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks[ UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = -180;
                                 rot[2] = 0;
                                 break;
 
                             case 1101:
-                                obj = blend_blocks[2];
+                                obj = blend_blocks1[2].blocks [UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 90;
                                 rot[2] = 0;
                                 break;
 
                             case 1111:
-                                obj = blend_blocks[3];
+                                obj = blend_blocks1[3].blocks [UnityEngine.Random.Range(0, 3)];
                                 rot[0] = 0;
                                 rot[1] = 0;
                                 rot[2] = 0;
