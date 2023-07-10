@@ -1670,24 +1670,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 889049514916502998, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
   m_PrefabInstance: {fileID: 8010322404918552258}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7168859912311056032 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 889049514916397154, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
-  m_PrefabInstance: {fileID: 8010322404918552258}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &2939429205535287522
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168859912311056032}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.01
-  m_Center: {x: -0.013, y: -0, z: 0}
 --- !u!1 &7168859912311056140 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 889049514916397518, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
@@ -1731,7 +1713,7 @@ MonoBehaviour:
   - {fileID: 2214169988854422947}
   hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   effects:
     grassImpact: {fileID: 0}
     metalImpact: {fileID: 0}
@@ -1739,6 +1721,24 @@ MonoBehaviour:
     woodImpact: {fileID: 0}
     enemyImpact: {fileID: 0}
   canShoot: 0
+--- !u!1 &7168859912311056150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 889049514916397524, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+  m_PrefabInstance: {fileID: 8010322404918552258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &7314342491330373621
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168859912311056150}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.027
+  m_Center: {x: -0, y: -0, z: 0}
 --- !u!1 &7168859912311056180 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 889049514916397558, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
