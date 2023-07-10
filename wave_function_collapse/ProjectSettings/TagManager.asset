@@ -17,8 +17,8 @@ TagManager:
   - Obstacles
   - Ground
   - Wall
-  - 
-  - 
+  - Enemy
+  - Weapon
   - 
   - 
   - 
