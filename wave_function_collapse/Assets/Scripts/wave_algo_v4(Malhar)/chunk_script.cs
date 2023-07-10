@@ -245,10 +245,18 @@ public class chunk_script : MonoBehaviour
                // Debug.Log(i);
                 for (int j = central_room_coordinate_x - central_room_size_y /*- step*/ ; j < central_room_coordinate_x + central_room_size_y /*+step*/; j++)
                 {
-                    //Debug.Log(j);
-                    chunks[i, j, k].un_collapse();
-                    chunks[i, j, k] = new block(i, j, k, tiles[k==0?1:2],room_x_scale,room_y_scale,room_z_scale, k == 0 ? 1 : 2);
-                    chunks[i, j, k].set_collapsed();
+                    if (i == central_room_coordinate_x - central_room_size_x || i == central_room_coordinate_x + central_room_size_y - 1 || j == central_room_coordinate_x - central_room_size_y || j == central_room_coordinate_x + central_room_size_y - 1)
+                    {
+                        chunks[i, j, k].un_collapse();
+                        chunks[i, j, k] = new block(i, j, k, tiles[1], room_x_scale, room_y_scale, room_z_scale,1);
+                        chunks[i, j, k].set_collapsed();
+                    }
+                    else
+                    { //Debug.Log(j);
+                        chunks[i, j, k].un_collapse();
+                        chunks[i, j, k] = new block(i, j, k, tiles[k == 0 ? 1 : 2], room_x_scale, room_y_scale, room_z_scale, k == 0 ? 1 : 2);
+                        chunks[i, j, k].set_collapsed();
+                    }
                 }
             }
             step = step + 1;
@@ -267,7 +275,7 @@ public class chunk_script : MonoBehaviour
         }
     }
 
-    private void room_collapse(int floor) // I am not at liberty to talk about this
+    private void room_collapse(int floor) 
     {
         int grid_rnd_start_x = rnd.Next(padding, grid_size - padding);
         int grid_rnd_start_y = rnd.Next(padding, grid_size - padding);

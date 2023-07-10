@@ -8,7 +8,8 @@ public class Mesh_combiner_script_call : MonoBehaviour
     {
         MeshCombiner meshCombiner = gameObject.AddComponent<MeshCombiner>();
         meshCombiner.CreateMultiMaterialMesh = true;
-        meshCombiner.DestroyCombinedChildren = true;
+        meshCombiner.DeactivateCombinedChildrenMeshRenderers = true;
+        //meshCombiner.DestroyCombinedChildren = true;
 
         meshCombiner.CombineMeshes(false);
     }

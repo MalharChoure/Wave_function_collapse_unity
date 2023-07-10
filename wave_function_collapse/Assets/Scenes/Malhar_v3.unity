@@ -1955,8 +1955,8 @@ MonoBehaviour:
   room_y_scale: 6
   room_z_scale: 6
   central_room_size: 5
-  central_room_size_x: 8
-  central_room_size_y: 8
+  central_room_size_x: 9
+  central_room_size_y: 9
   central_room_coordinate_x: 0
   tiles:
   - {fileID: 85643582731852198, guid: da8b0dba7c3c9304f96f5c348c54984f, type: 3}
