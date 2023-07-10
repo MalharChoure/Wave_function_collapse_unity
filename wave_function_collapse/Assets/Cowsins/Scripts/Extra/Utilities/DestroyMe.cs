@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class DestroyMe : MonoBehaviour
 {
-    public float timeToDestroy;
+    public float timeToDestroy = 1.5f;
 
     void Start()
     {

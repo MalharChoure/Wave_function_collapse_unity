@@ -14,7 +14,9 @@ public class AiChaseState : AiState
 	public void Enter(AiAgent agent)
 	{
 		aiPath = agent.GetComponent<AIPath>();
-		
+		agent.GetComponent<AIDestinationSetter>().enabled = true;
+		agent.GetComponent<AIPath>().enabled = true;
+		agent.GetComponent<Seeker>().enabled = true;
 	}
 
 	public void Update(AiAgent agent)

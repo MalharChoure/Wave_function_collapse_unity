@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &594629209876835044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2214169988854422947}
+  - component: {fileID: 6003207157387993764}
+  m_Layer: 7
+  m_Name: ray_offSet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2214169988854422947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594629209876835044}
+  m_LocalRotation: {x: -0.7068599, y: 0, z: 0, w: 0.7073536}
+  m_LocalPosition: {x: -0.0012, y: 0.038, z: 0.0079}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7168859912310700780}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -89.96, y: 0, z: 0}
+--- !u!114 &6003207157387993764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594629209876835044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea616162d54fc1c4ba6cf72861f08c68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8010322403233836384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,7 +1072,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
       propertyPath: endReachedDistance
-      value: 2.5
+      value: 3.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+      propertyPath: pickNextWaypointDist
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 889049513753946904, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
       propertyPath: autoRepath.maximumInterval
@@ -1612,29 +1660,85 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+--- !u!4 &7168859912310700780 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 889049514916502574, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+  m_PrefabInstance: {fileID: 8010322404918552258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7168859912310700820 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 889049514916502998, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
   m_PrefabInstance: {fileID: 8010322404918552258}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7168859912311056150 stripped
+--- !u!1 &7168859912311056032 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 889049514916397524, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+  m_CorrespondingSourceObject: {fileID: 889049514916397154, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
   m_PrefabInstance: {fileID: 8010322404918552258}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &8010322404452436090
+--- !u!135 &2939429205535287522
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168859912311056150}
+  m_GameObject: {fileID: 7168859912311056032}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.025
-  m_Center: {x: -0, y: -0, z: 0}
+  m_Radius: 0.01
+  m_Center: {x: -0.013, y: -0, z: 0}
+--- !u!1 &7168859912311056140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 889049514916397518, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
+  m_PrefabInstance: {fileID: 8010322404918552258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4864380743148327709
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168859912311056140}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a45d4ed2ae2c5b843bb3bfaeddb763c1, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5f25f89e241c41140b150b356c49f629, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 1
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2022706359243806777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168859912311056140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb29c798d1f2d424e9a96cfded57e6dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 8759729d607ac74488001f6e15603b28, type: 2}
+  firePoint:
+  - {fileID: 2214169988854422947}
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  effects:
+    grassImpact: {fileID: 0}
+    metalImpact: {fileID: 0}
+    mudImpact: {fileID: 0}
+    woodImpact: {fileID: 0}
+    enemyImpact: {fileID: 0}
+  canShoot: 0
 --- !u!1 &7168859912311056180 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 889049514916397558, guid: c325cf0a405cc6b40b1bcaf05242d241, type: 3}
@@ -1669,6 +1773,21 @@ MonoBehaviour:
   InitialStateType: 0
   playerTransform: {fileID: 0}
   maxSightDistance: 20
+--- !u!114 &3813099269178386049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168859912311056180}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1bee3301ab8fa4d8655e845a6f02ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  aimTransform: {fileID: 2214169988854422947}
+  bone: {fileID: 0}
 --- !u!114 &8010322405159772788
 MonoBehaviour:
   m_ObjectHideFlags: 0

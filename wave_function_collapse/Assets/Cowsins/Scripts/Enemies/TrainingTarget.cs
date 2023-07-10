@@ -14,7 +14,7 @@ public class TrainingTarget : Enemy
         if (isDead) return;
         base.Damage(damage);
         aiAgent = GetComponent<AiAgent>();
-        // GetComponent<Animator>().Play("Target_Hit");
+        // GetComponent<Animator>().Play("Hit_Reaction_2");
     }
     public override void Die()
     {

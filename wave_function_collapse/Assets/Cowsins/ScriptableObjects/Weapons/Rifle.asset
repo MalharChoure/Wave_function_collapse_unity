@@ -30,7 +30,7 @@ MonoBehaviour:
   explosionForce: 0
   explosionVFX: {fileID: 0}
   continuousFire: 0
-  fireRate: 0.8
+  fireRate: 1
   reloadTime: 2.5
   infiniteBullets: 0
   magazineSize: 15

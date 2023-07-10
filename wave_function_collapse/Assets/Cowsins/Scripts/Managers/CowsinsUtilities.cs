@@ -10,19 +10,28 @@ namespace cowsins
 {
     public static class CowsinsUtilities
     {
-        /// <summary>
-        /// Returns a Vector3 that applies spread to the bullets shot
-        /// </summary>
-        public static Vector3 GetSpreadDirection(float amount, Camera camera)
-        {
-            float horSpread = Random.Range(-amount,amount);
-            float verSpread = Random.Range(-amount, amount);
-            Vector3 spread = camera.transform.InverseTransformDirection(new Vector3(horSpread, verSpread, 0)); 
-            Vector3 dir = camera.transform.forward + spread;
+		/// <summary>
+		/// Returns a Vector3 that applies spread to the bullets shot
+		/// </summary>
+		public static Vector3 GetSpreadDirection(float amount, Camera camera)
+		{
+			float horSpread = Random.Range(-amount, amount);
+			float verSpread = Random.Range(-amount, amount);
+			Vector3 spread = camera.transform.InverseTransformDirection(new Vector3(horSpread, verSpread, 0));
+			Vector3 dir = camera.transform.forward + spread;
 
-            return dir;
-        }
-        public static IEnumerator PlayAnim(string anim, Animator animated)
+			return dir;
+		}
+		public static Vector3 GetSpreadDirection(float amount, Transform offSet)
+		{
+			float horSpread = Random.Range(-amount, amount);
+			float verSpread = Random.Range(-amount, amount);
+			Vector3 spread = offSet.transform.InverseTransformDirection(new Vector3(horSpread, verSpread, 0));
+			Vector3 dir = offSet.transform.forward + spread;
+
+			return dir;
+		}
+		public static IEnumerator PlayAnim(string anim, Animator animated)
         {
             animated.SetBool(anim, true);
             yield return new WaitForSeconds(.01f);

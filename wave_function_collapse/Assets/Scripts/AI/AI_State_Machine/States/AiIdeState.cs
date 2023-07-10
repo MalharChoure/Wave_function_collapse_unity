@@ -12,6 +12,9 @@ public class AiIdeState : AiState
 
 	public void Enter(AiAgent agent)
 	{
+		agent.GetComponent<AIDestinationSetter>().enabled = false;
+		agent.GetComponent<AIPath>().enabled = false;
+		agent.GetComponent<Seeker>().enabled = false;
 	}
 
 	public void Update(AiAgent agent)
@@ -40,6 +43,8 @@ public class AiIdeState : AiState
 
 	public void Exit(AiAgent agent)
 	{
-		
+		agent.GetComponent<AIDestinationSetter>().enabled = true;
+		agent.GetComponent<AIPath>().enabled = true;
+		agent.GetComponent<Seeker>().enabled = true;
 	}
 }
