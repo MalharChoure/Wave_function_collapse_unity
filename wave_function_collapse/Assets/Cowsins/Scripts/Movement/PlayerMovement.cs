@@ -857,7 +857,7 @@ public class PlayerMovement : MonoBehaviour
         if ((orientation.forward - wallDirection).magnitude > (orientation.forward + wallDirection).magnitude) wallDirection = -wallDirection;
 
         // Handling WallRun Cancel
-        if (OppositeVectors() < -.5f) StopWallRun();
+        if (OppositeVectors() < -1f) StopWallRun();
 
         if (cancelWallRunMethod == CancelWallRunMethod.Timer)
         {
